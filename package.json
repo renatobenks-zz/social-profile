@@ -1,18 +1,22 @@
 {
-  "name": "app",
+  "name": "CodeRockrApplication",
   "version": "0.1.0",
-  "private": true,
-  "devDependencies": {
-    "react-scripts": "0.9.5"
-  },
+  "private": false,
   "dependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-env": "^1.3.2",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-0": "^6.22.0",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "url-loader": "^0.5.8",
+    "webpack": "^2.3.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "start": "",
+    "build": "./node_modules/.bin/webpack",
+    "test": ""
   }
 }
