@@ -7,7 +7,10 @@ module.exports = {
     devtool: "cheap-module-source-map",
     entry: {
         bundle: [
-            "./src/index.js"
+            "webpack-hot-middleware/client",
+            "webpack/hot/only-dev-server",
+            "./src/index.js",
+            "./public/styles/index.less"
         ],
         vendor: [
             "react",
@@ -40,6 +43,28 @@ module.exports = {
                 exclude: path.join(__dirname, "node_modules"),
                 use: "babel-loader",
                 include: path.join(__dirname, "src")
+            },
+            {
+                test: /\.(less|css)$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            camelCase: true
+                        }
+                    },
+                    {
+                        loader: 'less-loader',
+                        options: {
+                            sourceMap: true,
+                            importLoaders: 1,
+                            camelCase: true,
+                            strictMath: true
+                        }
+                    }
+                ]
             },
             {
                 test: /\.svg$/,
