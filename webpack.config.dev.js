@@ -47,16 +47,16 @@ module.exports = {
             {
                 test: /\.(less|css)$/,
                 use: [
-                    'style-loader',
+                    "style-loader",
                     {
-                        loader: 'css-loader',
+                        loader: "css-loader",
                         options: {
                             sourceMap: true,
                             camelCase: true
                         }
                     },
                     {
-                        loader: 'less-loader',
+                        loader: "less-loader",
                         options: {
                             sourceMap: true,
                             importLoaders: 1,
@@ -68,7 +68,7 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
-                use: 'url-loader'
+                use: "url-loader"
             }
         ]
     }
