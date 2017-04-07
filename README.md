@@ -1,5 +1,7 @@
 # CodeRockr Application
 
+[![Build Status](https://travis-ci.org/renatobenks/CodeRockrApplication.svg?branch=master)](https://travis-ci.org/renatobenks/CodeRockrApplication)
+
 Software for coderockr challenge.
 ---
 
