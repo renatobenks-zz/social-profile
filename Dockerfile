@@ -1,4 +1,4 @@
 FROM mhart/alpine-node:6.10
-ADD . /CodeRockrApplication
 WORKDIR /CodeRockrApplication
+COPY . /CodeRockrApplication
 RUN npm install
