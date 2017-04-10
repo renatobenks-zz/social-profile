@@ -111,6 +111,11 @@ const renderPage = (assets) => {
               To create a production bundle, use 'npm run build'.
               To run app into production, use 'npm run production'.
             -->
+            <script>
+                window.INITIAL_STATE = {
+                    title: 'Hello from React app!'
+                }
+            </script>
             <script src="${assets.vendor.js}"></script>
             <script src="${assets.bundle.js}"></script>
         </body>
