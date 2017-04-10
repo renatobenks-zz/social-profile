@@ -9,6 +9,7 @@ module.exports = {
         bundle: [
             "webpack-hot-middleware/client",
             "webpack/hot/only-dev-server",
+            "react-hot-loader/patch",
             "./src/index.js",
             "./public/styles/index.less"
         ],
