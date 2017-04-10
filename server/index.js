@@ -1,3 +1,4 @@
+import fs from 'fs';
 import path from 'path';
 import express from 'express';
 import favicon from 'serve-favicon';
@@ -12,6 +13,7 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpack_config from '../webpack.config.dev';
+import webpack_production from '../webpack.config.prod';
 
 const isDeveloping = process.env.NODE_ENV === 'development';
 const port = process.env.PORT || 8000;
@@ -37,6 +39,22 @@ server.use(favicon(
     )
 ));
 
+let assets = {};
+const getAssets = (req, res, next) => {
+    const assetsByChunkName = res.locals.webpackStats.toJson().assetsByChunkName;
+    for (let asset in assetsByChunkName) {
+        if (assetsByChunkName.hasOwnProperty(asset)) {
+            assetsByChunkName[asset]
+                .filter(asset => asset.endsWith('.js'))
+                .map(_asset => {
+                    assets[asset] = {
+                        js: path.join(webpack_config.output.publicPath, _asset)
+                    }
+                });
+        }
+    } next();
+};
+
 if (isDeveloping) {
     const compiler = webpack(webpack_config);
     server.use(morgan('dev'));
@@ -44,6 +62,7 @@ if (isDeveloping) {
         publicPath: webpack_config.output.publicPath,
         contentBase: 'src',
         hot: true,
+        serverSideRender: true,
         stats: {
             colors: true,
             hash: true,
@@ -53,23 +72,76 @@ if (isDeveloping) {
             modules: false,
         }
     }));
+
     server.use(webpackHotMiddleware(compiler, {
         log: console.log,
     }));
+
+    server.get('*', getAssets);
 } else {
     server.use(morgan('combined'));
-    server.use('/build/static', express.static(buildPath));
+    server.use('/build/public', express.static(webpack_production.output.path));
+    fs.readFile('assets.json', 'utf-8', (err, data) => {
+        if (err) throw err;
+        assets = JSON.parse(data);
+    });
 }
+
+const renderPage = (assets) => {
+    return `<!doctype html>
+    <html lang="en">
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <style type="text/css">
+                body {
+                    margin: 0;
+                    padding: 0;
+                    font-family: sans-serif;
+                }
+            </style>
+            ${assets.vendor.css ? `<link rel="stylesheet" href="${assets.vendor.css}"/>` : ''}
+            ${assets.bundle.css ? `<link rel="stylesheet" href="${assets.bundle.css}"/>` : ''}
+            <!--
+              Notice the use of %PUBLIC_URL% in the tag above.
+              It will be replaced with the URL of the 'public' folder during the build.
+              Only files inside the 'public' folder can be referenced from the HTML.
+    
+              Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+              work correctly both with client-side routing and a non-root public URL.
+              Learn how to configure a non-root public URL by running 'npm run build'.
+            -->
+            <title>Social profile | CodeRockr</title>
+        </head>
+        <body>
+            <div id="root"></div>
+            <!--
+              This HTML file is a string template.
+              If you open it directly in the browser, you will see an empty page.
+    
+              You can add webfonts, meta tags, or analytics to this file.
+              The build step will place the bundled scripts into the <body> tag.
+    
+              To begin the development, run 'npm start'.
+              To create a production bundle, use 'npm run build'.
+              To run app into production, use 'npm run production'.
+            -->
+            <script src="${assets.vendor.js}"></script>
+            <script src="${assets.bundle.js}"></script>
+        </body>
+    </html>`
+};
 
 server.get('*', (req, res) => {
     res.statusCode = 200;
-    res.sendFile(path.join(__dirname.split('server')[0], 'public', 'index.html'));
+    res.send(renderPage(assets));
 });
 
 server.listen(port, '0.0.0.0', (err) => {
     if (err) throw err;
 
-    console.info('==> 🌎 Server listening on port %s.' +
-        'Open up http://0.0.0.0:%s/ in your browser.', port, port);
+    console.info('🌎 Server listening on port %s.\n', port);
+    console.log('Open up http://0.0.0.0:%s/ in your browser.\n', port);
 });
+
 export default server
