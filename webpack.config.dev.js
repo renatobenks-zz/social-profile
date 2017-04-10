@@ -42,7 +42,7 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: path.join(__dirname, "node_modules"),
-                use: "babel-loader",
+                use: ["react-hot-loader/webpack", "babel-loader"],
                 include: path.join(__dirname, "src")
             },
             {
