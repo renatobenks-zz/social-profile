@@ -38,31 +38,18 @@ server.use(favicon(
         'favicon.ico'
     )
 ));
-
-let assets = {};
-const getAssets = (req, res, next) => {
-    const assetsByChunkName = res.locals.webpackStats.toJson().assetsByChunkName;
-    for (let asset in assetsByChunkName) {
-        if (assetsByChunkName.hasOwnProperty(asset)) {
-            assetsByChunkName[asset]
-                .filter(asset => asset.endsWith('.js'))
-                .map(_asset => {
-                    assets[asset] = {
-                        js: path.join(webpack_config.output.publicPath, _asset)
-                    }
-                });
-        }
-    } next();
-};
-
+let assets;
 if (isDeveloping) {
     const compiler = webpack(webpack_config);
+    assets = {
+        vendor: {js: '/build/public/vendor.js'},
+        bundle: {js: '/build/public/bundle.js'}
+    };
     server.use(morgan('dev'));
     server.use(webpackMiddleware(compiler, {
         publicPath: webpack_config.output.publicPath,
         contentBase: 'src',
         hot: true,
-        serverSideRender: true,
         stats: {
             colors: true,
             hash: true,
@@ -76,8 +63,6 @@ if (isDeveloping) {
     server.use(webpackHotMiddleware(compiler, {
         log: console.log,
     }));
-
-    server.get('*', getAssets);
 } else {
     server.use(morgan('combined'));
     server.use('/build/public', express.static(webpack_production.output.path));
@@ -133,8 +118,7 @@ const renderPage = (assets) => {
 };
 
 server.get('*', (req, res) => {
-    res.statusCode = 200;
-    res.send(renderPage(assets));
+    res.status(200).send(renderPage(assets));
 });
 
 server.listen(port, '0.0.0.0', (err) => {
