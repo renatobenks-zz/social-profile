@@ -39,3 +39,18 @@ Para habilitar o hot reloading na aplicação, usando o
 Express, o webpack dispõe o middleware, 
 `webpack-hot-middleware`, para que o hot reloading 
 seja habilitado no server do Express.
+
+[Docker](http://docker.com/)
+---
+
+[Heroku](https://dashboard.heroku.com/)
+---
+
+[Travis CI](https://travis-ci.org/)
+---
+
+[Codacy](https://travis-ci.org/)
+---
+
+[Codecov](https://codecov.io/gh)
+---
