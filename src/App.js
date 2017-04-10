@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import logo from '../public/images/logo.svg';
 
 class App extends Component {
     render () {
-        const { title } = this.props;
+        const { title, logo } = this.props;
         return (
             <div className='App'>
                 <div className='App-header'>

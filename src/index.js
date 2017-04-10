@@ -2,12 +2,13 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
+import logo from '../public/images/logo.svg';
 import App from './App';
 
 const render = (Container) => {
     ReactDOM.render(
         <AppContainer>
-            <Container {...window.INITIAL_STATE} />
+            <Container logo={logo} {...window.INITIAL_STATE} />
         </AppContainer>,
         document.getElementById('root')
     );

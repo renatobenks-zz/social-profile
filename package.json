@@ -3,8 +3,13 @@
   "version": "0.1.0",
   "private": false,
   "devDependencies": {
+    "babel-jest": "^19.0.0",
+    "codecov": "^2.1.0",
     "eslint": "^3.19.0",
-    "eslint-plugin-react": "^6.10.3"
+    "eslint-plugin-react": "^6.10.3",
+    "jest": "^19.0.2",
+    "react-test-renderer": "^15.5.4",
+    "regenerator-runtime": "^0.10.3"
   },
   "dependencies": {
     "assets-webpack-plugin": "^3.5.1",
@@ -39,10 +44,28 @@
     "webpack-hot-middleware": "^2.18.0"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development node ./index.js",
+    "start": "./node_modules/.bin/cross-env NODE_ENV=development node ./index.js",
     "production": "./node_modules/.bin/cross-env NODE_ENV=production node ./index.js",
     "build": "./node_modules/.bin/webpack -p --config ./webpack.config.prod.js",
-    "test": "echo 'No test runner yet!'",
+    "test": "./node_modules/.bin/jest --colors",
+    "test:report": "npm test && ./node_modules/.bin/codecov",
+    "test:watch": "npm test -- --watch",
     "clean": "rm -rf build/ assets.json"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      ".*": "babel-jest"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "node",
+      "jsx"
+    ],
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
+    "testEnvironment": "node",
+    "testRegex": "\\.test\\.jsx?$"
   }
 }
