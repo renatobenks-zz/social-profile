@@ -40,8 +40,8 @@
   },
   "scripts": {
     "start": "cross-env NODE_ENV=development node ./index.js",
-    "production": "cross-env NODE_ENV=production node ./index.js",
-    "build": "webpack -p --config ./webpack.config.prod.js",
+    "production": "./node_modules/.bin/cross-env NODE_ENV=production node ./index.js",
+    "build": "./node_modules/.bin/webpack -p --config ./webpack.config.prod.js",
     "test": "echo 'No test runner yet!'",
     "clean": "rm -rf build/ assets.json"
   }
