@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import banner from '../../../public/images/banner.png';
+
+import Welcome from '../Welcome/Welcome.jsx';
 import Message from '../Welcome/Message.jsx';
 class Banner extends Component {
     constructor (props) {
@@ -27,17 +30,24 @@ class Banner extends Component {
     }
 
     render () {
-        const classBanner = String.prototype.concat(
-            'App-banner',
-            this.state.active ? ' active' : ' non-active',
-        );
+        if (!this.state.active) {
+            return (
+                <div
+                    style={this.state.style}
+                    className="App-banner non-active"
+                />
+            )
+        }
 
         return (
-            <div style={this.state.style} className={classBanner}>
-                {this.state.active
-                    ? <Message onClose={this.onCloseMessage} />
-                    : ''
-                }
+            <div className="App-banner active">
+                <Welcome onClose={this.onCloseMessage}>
+                    <Message
+                        title="Bem-vindo à"
+                        image={banner}
+                        text="PROFILES"
+                    />
+                </Welcome>
             </div>
         )
     }
