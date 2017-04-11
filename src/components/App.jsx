@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 
-import Header from '../Header/Header.jsx';
+import Banner from './Banner/Banner.jsx';
+import Header from './Header/Header.jsx';
+import Logo from './Logo/Logo.jsx';
+import Title from './Title/Title.jsx';
 class App extends Component {
     render () {
         const { title, logo } = this.props;
         return (
             <div className='App'>
-                <div className='App-header'>
-                    <img src={logo} className='App-logo' alt='logo' />
-                    <h2>{title}</h2>
-                </div>
+                <Banner/>
+                <Header>
+                    <Logo logo={logo} />
+                    <Title title={title} />
+                </Header>
                 <p className='App-intro'>
                     To get started, edit <code>src/App.js</code> and save to reload.
                 </p>
@@ -18,4 +22,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default App
