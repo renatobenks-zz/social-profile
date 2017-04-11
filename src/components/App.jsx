@@ -6,10 +6,10 @@ import Logo from './Logo/Logo.jsx';
 import Title from './Title/Title.jsx';
 class App extends Component {
     render () {
-        const { title, logo } = this.props;
+        const { title, logo, banner } = this.props;
         return (
             <div className='App'>
-                <Banner/>
+                <Banner banner={banner}/>
                 <Header>
                     <Logo logo={logo} />
                     <Title title={title} />

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import banner from '../../../public/images/banner.png';
-
 import Welcome from '../Welcome/Welcome.jsx';
 import Message from '../Welcome/Message.jsx';
 class Banner extends Component {
@@ -39,13 +37,14 @@ class Banner extends Component {
             )
         }
 
+        const { banner } = this.props;
         return (
             <div className="App-banner active">
                 <Welcome onClose={this.onCloseMessage}>
                     <Message
                         title="Bem-vindo à"
-                        image={banner}
                         text="PROFILES"
+                        image={banner}
                     />
                 </Welcome>
             </div>
