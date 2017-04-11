@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import logo from '../public/images/logo.svg';
-import App from './App';
+import App from './components/App/App';
 
 const render = (Container) => {
     ReactDOM.render(
@@ -18,7 +18,7 @@ render(App);
 
 if (module.hot) {
     module.hot.accept('./App.js', () => {
-        const App = require('./App.js').default;
+        const App = require('./components/App/App.js').default;
         render(App);
     });
 }
