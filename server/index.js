@@ -83,6 +83,7 @@ const renderPage = (assets) => {
                     margin: 0;
                     padding: 0;
                     font-family: sans-serif;
+                    background: #d6d6d6;
                 }
             </style>
             ${assets.vendor.css ? `<link rel="stylesheet" href="${assets.vendor.css}"/>` : ''}
