@@ -48,6 +48,7 @@ describe('Component: Banner', () => {
 
     describe('Banner disable', () => {
         beforeEach(() => {
+            jest.useFakeTimers();
             Welcome.children[1].props.onClick({preventDefault: () => true});
         });
 
@@ -63,11 +64,11 @@ describe('Component: Banner', () => {
         });
 
         test('put banner above header with relative position', () => {
-            setTimeout(() => {
-                component = BannerComponent.toJSON();
-                expect(component).toMatchSnapshot();
-                expect(component.props.style).toEqual({position: 'relative'});
-            }, 1500);
+            jest.runAllTimers();
+            component = BannerComponent.toJSON();
+            expect(component.props.style).toEqual({
+                position: 'relative'
+            });
         });
     });
 });
