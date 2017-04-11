@@ -5,10 +5,11 @@ import { AppContainer } from 'react-hot-loader';
 import logo from '../public/images/logo.svg';
 import App from './components/App.jsx';
 
+import banner from '../public/images/banner.png';
 const render = (Container) => {
     ReactDOM.render(
         <AppContainer>
-            <Container logo={logo} {...window.INITIAL_STATE} />
+            <Container banner={banner} logo={logo} {...window.INITIAL_STATE} />
         </AppContainer>,
         document.getElementById('root')
     );
