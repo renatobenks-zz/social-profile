@@ -15,7 +15,8 @@ module.exports = {
         ],
         vendor: [
             "react",
-            "react-dom"
+            "react-dom",
+            "animate.css/animate.min.css"
         ]
     },
     output: {

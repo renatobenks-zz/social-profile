@@ -12,6 +12,7 @@
     "regenerator-runtime": "^0.10.3"
   },
   "dependencies": {
+    "animate.css": "^3.5.2",
     "assets-webpack-plugin": "^3.5.1",
     "babel-core": "^6.24.0",
     "babel-loader": "^6.4.1",
