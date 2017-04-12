@@ -49,7 +49,7 @@
     "start": "./node_modules/.bin/cross-env NODE_ENV=development node ./index.js",
     "production": "./node_modules/.bin/cross-env NODE_ENV=production node ./index.js",
     "build": "./node_modules/.bin/webpack -p --config ./webpack.config.prod.js",
-    "test": "./node_modules/.bin/jest --colors",
+    "test": "./node_modules/.bin/jest --colors -u",
     "test:report": "npm test && ./node_modules/.bin/codecov",
     "test:watch": "npm test -- --watch",
     "clean": "rm -rf build/ assets.json"
