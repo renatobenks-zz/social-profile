@@ -3,7 +3,11 @@ import ReactRender from 'react-test-renderer';
 
 import Content from './Content.jsx';
 const ContentComponent = ReactRender.create(
-    <Content/>
+    <Content>
+        <p>
+            To get started, edit <code>src/App.js</code> and save to reload.
+        </p>
+    </Content>
 );
 const component = ContentComponent.toJSON();
 

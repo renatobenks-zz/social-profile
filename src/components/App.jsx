@@ -15,7 +15,11 @@ class App extends Component {
                     <Logo logo={logo} />
                     <Title title={title} />
                 </Header>
-                <Content/>
+                <Content>
+                    <p>
+                        To get started, edit <code>src/App.js</code> and save to reload.
+                    </p>
+                </Content>
             </div>
         );
     }
