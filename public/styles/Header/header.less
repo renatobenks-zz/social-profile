@@ -1,7 +1,22 @@
 .App-header {
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 2;
   background-color: #222;
-  height: 150px;
-  padding: 20px;
+  padding: 4rem;
   color: white;
   margin: 0;
+  div:nth-child(odd) {
+    padding: 0 1rem;
+    border-right: 1px solid white;
+  }
+
+  .App-title {
+    h1 {
+      font-size: 2.5rem;
+    }
+    .App-subtitle {
+      font-size: 2rem;
+    }
+  }
 }

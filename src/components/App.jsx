@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Banner from './Banner/Banner.jsx';
 import Header from './Header/Header.jsx';
-import Logo from './Logo/Logo.jsx';
+import Company from './Company/Company.jsx';
 import Title from './Title/Title.jsx';
 import Content from './Content/Content.jsx';
 class App extends Component {
@@ -12,8 +12,9 @@ class App extends Component {
             <div className='App'>
                 <Banner banner={banner}/>
                 <Header>
-                    <Logo logo={logo} />
-                    <Title title={title} />
+                    <Company logo={logo}>
+                        <Title title={title} />
+                    </Company>
                 </Header>
                 <Content>
                     <p>

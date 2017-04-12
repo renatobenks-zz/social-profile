@@ -113,7 +113,9 @@ const renderPage = (assets) => {
               To run app into production, use 'npm run production'.
             -->
             <script>
-                window.INITIAL_STATE = {title: 'CodeRockr social-profiles'};
+                window.INITIAL_STATE = {
+                    title: 'CodeRockr social-profiles.Welcome! Just enjoy'
+                };
                 window.DEVELOPMENT = ${isDeveloping}
             </script>
             <script src="${assets.vendor.js}"></script>
