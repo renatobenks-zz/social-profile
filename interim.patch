@@ -1,0 +1,104 @@
+commit dfce768d44f7ed14bccb1a42cdeb133461efae70
+Author: Renato Benkendorf <renato-benkendorf@hotmail.com>
+Date:   Wed Apr 12 21:37:38 2017 -0300
+
+    using semantic ui framework with react components
+
+diff --git a/package.json b/package.json
+index af2bb3b..74d1bc7 100644
+--- a/package.json
++++ b/package.json
+@@ -37,7 +37,8 @@
+     "react": "^15.4.2",
+     "react-dom": "^15.4.2",
+     "react-hot-loader": "^3.0.0-beta.6",
+-    "semantic-ui-search": "^2.2.10",
++    "semantic-ui-css": "^2.2.10",
++    "semantic-ui-react": "^0.67.2",
+     "serve-favicon": "^2.4.2",
+     "style-loader": "^0.16.1",
+     "url-loader": "^0.5.8",
+diff --git a/src/components/Filters/SearchFilter.jsx b/src/components/Filters/SearchFilter.jsx
+deleted file mode 100644
+index 81cdafd..0000000
+--- a/src/components/Filters/SearchFilter.jsx
++++ /dev/null
+@@ -1,12 +0,0 @@
+-import React, { Component } from 'react';
+-
+-import Search from '../Search/Search.jsx';
+-class SearchFilter extends Component {
+-    render () {
+-        return (
+-            <Search placeholder="What you searching for?"/>
+-        )
+-    }
+-}
+-
+-export default SearchFilter
+diff --git a/src/components/Search/Search.jsx b/src/components/Search/Search.jsx
+deleted file mode 100644
+index f672eea..0000000
+--- a/src/components/Search/Search.jsx
++++ /dev/null
+@@ -1,14 +0,0 @@
+-import React, { Component } from 'react';
+-
+-class Search extends Component {
+-    render () {
+-        return (
+-            <input
+-                placeholder={this.props.placeholder}
+-                type="text"
+-            />
+-        )
+-    }
+-}
+-
+-export default Search
+diff --git a/src/components/SearchFilter/SearchFilter.jsx b/src/components/SearchFilter/SearchFilter.jsx
+new file mode 100644
+index 0000000..81cdafd
+--- /dev/null
++++ b/src/components/SearchFilter/SearchFilter.jsx
+@@ -0,0 +1,12 @@
++import React, { Component } from 'react';
++
++import Search from '../Search/Search.jsx';
++class SearchFilter extends Component {
++    render () {
++        return (
++            <Search placeholder="What you searching for?"/>
++        )
++    }
++}
++
++export default SearchFilter
+diff --git a/webpack.config.dev.js b/webpack.config.dev.js
+index 86a7e36..5e8fbb1 100644
+--- a/webpack.config.dev.js
++++ b/webpack.config.dev.js
+@@ -16,7 +16,8 @@ module.exports = {
+         vendor: [
+             "react",
+             "react-dom",
+-            "animate.css/animate.min.css"
++            "animate.css/animate.min.css",
++            "semantic-ui-css/semantic.min.css"
+         ]
+     },
+     output: {
+diff --git a/webpack.config.prod.js b/webpack.config.prod.js
+index 8b3329e..d5ff15f 100644
+--- a/webpack.config.prod.js
++++ b/webpack.config.prod.js
+@@ -15,7 +15,8 @@ module.exports = {
+         vendor: [
+             "react",
+             "react-dom",
+-            "animate.css/animate.min.css"
++            "animate.css/animate.min.css",
++            "semantic-ui-css/semantic.min.css"
+         ]
+     },
+     output: {

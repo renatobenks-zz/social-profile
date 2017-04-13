@@ -1,0 +1,26 @@
+.App-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  background: transparent center no-repeat;
+  -webkit-transition: all 1s 0.25s cubic-bezier(0.4, 0, 1, 1);
+  -moz-transition: all 1s 0.25s cubic-bezier(0.4, 0, 1, 1);
+  -ms-transition: all 1s 0.25s cubic-bezier(0.4, 0, 1, 1);
+  -o-transition: all 1s 0.25s cubic-bezier(0.4, 0, 1, 1);
+  transition: all 1s 0.25s cubic-bezier(0.4, 0, 1, 1);
+  &.active {
+    height: 100%;
+    padding: 0;
+    background-color: black;
+  }
+  &.non-active {
+    height: 196px;
+    padding: 2rem 0;
+    background-image: url("../../images/banner.png");
+    background-color: black;
+    -webkit-background-size: auto 75%;
+    background-size: auto 75%;
+  }
+}
