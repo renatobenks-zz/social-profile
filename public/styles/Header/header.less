@@ -4,11 +4,13 @@
   flex-grow: 2;
   background-color: #222;
   padding: 4rem;
-  color: white;
   margin: 0;
-  div:nth-child(odd) {
+  color: white;
+  > div {
     padding: 0 1rem;
-    border-right: 1px solid white;
+    &:nth-child(odd) {
+      border-right: 1px solid white;
+    }
   }
 
   .App-title {

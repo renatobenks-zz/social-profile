@@ -14,9 +14,10 @@ class Banner extends Component {
 
     onCloseMessage (e) {
         e.preventDefault();
-        this.setState({
-            active: false
-        });
+        setTimeout(() =>
+            this.setState({
+                active: false
+            }), 150);
 
         setTimeout(() => {
             this.setState({
@@ -24,7 +25,7 @@ class Banner extends Component {
                     position: 'relative'
                 }
             });
-        }, 1500);
+        }, 1450);
     }
 
     render () {
