@@ -30,11 +30,12 @@ describe('Component: SearchFilter', () => {
     describe('Search', () => {
         const search = component.children[0];
         test('renders search', () => {
-            const classForSearch = search.props.className.split(' ');
             expect(search.type).toBe('div');
-            expect(classForSearch).toEqual(expect.arrayContaining(
-                ['icon', 'input']
-            ));
+            expect(search.props.className.split(' ')).toEqual(
+                expect.arrayContaining(
+                    ['icon', 'input']
+                )
+            );
         });
 
         test('renders input with icon', () => {
@@ -55,6 +56,69 @@ describe('Component: SearchFilter', () => {
                 expect(input.props.value).toBe(
                     propsSearchFilterComponent.label
                 );
+            });
+        });
+
+        describe('Icon', () => {
+            const icon = search.children[1];
+            test('renders icon', () => {
+                expect(icon.type).toBe('i');
+            });
+
+            test('renders search icon', () => {
+                expect(icon.props.className.split(' ')).toEqual(
+                    expect.arrayContaining(
+                        ['search']
+                    )
+                );
+            });
+        });
+    });
+
+    describe('Results', () => {
+        const results = component.children[1];
+        test('renders results', () => {
+            expect(results.type).toBe('div');
+            expect(results.props.className.split(' ')).toEqual(
+                expect.arrayContaining([
+                    'results'
+                ])
+            );
+        });
+
+        test('renders the content got in props content', () => {
+            expect(results.children.length).toBe(mockContent.length);
+        });
+
+        test('first content results should be active', () => {
+            expect(results.children[0].props.className.split(' ')).toEqual(
+                expect.arrayContaining(
+                    ['active']
+                )
+            );
+        });
+
+        describe('Title', () => {
+            test('renders title on content results', () => {
+                for (let result of results.children) {
+                    const contentResults = mockContent[results.children.indexOf(result)];
+                    const content = result.children[0];
+                    const title = content.children[0];
+                    expect(title.props.className).toBe('title');
+                    expect(title.children[0]).toBe(contentResults.text);
+                }
+            });
+        });
+
+        describe('Description', () => {
+            test('renders description on content results', () => {
+                for (let result of results.children) {
+                    const contentResults = mockContent[results.children.indexOf(result)];
+                    const content = result.children[0];
+                    const description = content.children[1];
+                    expect(description.props.className).toBe('description');
+                    expect(description.children[0]).toBe(contentResults.user);
+                }
             });
         });
     });
