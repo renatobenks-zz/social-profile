@@ -5,13 +5,13 @@ class SearchFilter extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            status: []
+            content: []
         }
     }
 
     componentWillMount () {
         this.setState({
-            status: this.props.status.map(item => ({
+            content: this.props.content.map(item => ({
                 title: item.text,
                 description: item.user
             }))
@@ -27,7 +27,7 @@ class SearchFilter extends Component {
                 icon="search"
                 input="text"
                 defaultValue={this.props.label}
-                results={this.state.status}
+                results={this.state.content}
             />
         )
     }

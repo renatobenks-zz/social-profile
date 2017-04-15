@@ -20,7 +20,7 @@ class App extends Component {
                     <Filters label="You can filter your list of status here">
                         <SearchFilter
                             label="What you searching for?"
-                            status={status}
+                            content={status}
                         />
                     </Filters>
                 </Header>
