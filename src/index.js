@@ -12,6 +12,11 @@ const status = [
     { user: 'Vinicius', text: 'other status' }
 ];
 
+const friends = [
+    { id: 1, user: 'Elton', image: '/public/01.avatar.jpg' },
+    { id: 2, user: 'Vinicius', image: '/public/02.avatar.png' }
+];
+
 import banner from '../public/images/banner.png';
 const render = (Container) => {
     ReactDOM.render(
@@ -20,6 +25,7 @@ const render = (Container) => {
                 banner={banner}
                 logo={logo}
                 status={status}
+                friends={friends}
                 {...window.INITIAL_STATE}
             />
         </AppContainer>,
