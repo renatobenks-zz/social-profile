@@ -8,6 +8,21 @@ import Content from './Content/Content.jsx';
 import Filters from './Filters/Filters.jsx';
 import SearchFilter from './SearchFilter/SearchFilter.jsx'
 class App extends Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            filtersDisabled: true
+        };
+
+        this.filtersDisabled = this.filtersDisabled.bind(this);
+    }
+
+    filtersDisabled (filtersDisabled) {
+        this.setState({
+            filtersDisabled
+        });
+    }
+
     render () {
         const { title, logo, banner, status } = this.props;
         return (
@@ -17,8 +32,12 @@ class App extends Component {
                     <Company logo={logo}>
                         <Title title={title} />
                     </Company>
-                    <Filters label="You can filter your list of status here">
+                    <Filters
+                        disabled={this.state.filtersDisabled}
+                        label="You can filter your list of status here"
+                        >
                         <SearchFilter
+                            checkFilterDisabled={this.filtersDisabled}
                             label="What you searching for?"
                             content={status}
                         />

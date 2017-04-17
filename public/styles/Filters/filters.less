@@ -24,6 +24,16 @@
       color: black;
       border: none;
       border-radius: 500rem;
+      -webkit-transition: all 0.1s;
+      -moz-transition: all 0.1s;
+      -ms-transition: all 0.1s;
+      -o-transition: all 0.1s;
+      transition: all 0.1s;
+      cursor: pointer;
+      &:disabled {
+        cursor: default;
+        background: rgba(255, 255, 255, .4);
+      }
     }
   }
 }

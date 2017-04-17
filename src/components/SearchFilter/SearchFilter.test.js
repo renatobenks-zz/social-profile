@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
+import { eventMock } from '../components.mock';
+
 const mockContent = [
     { user: 'Elton', text: 'nothing interesting' },
     { user: 'Elton', text: 'status updated' },
@@ -8,9 +10,15 @@ const mockContent = [
     { user: 'Vinicius', text: 'other status' }
 ];
 
+const App = {
+    filtersDisabled: (filterDisabled) => ({filterDisabled})
+};
+
 const propsSearchFilterComponent = {
-    label: "My label message to search with filter",
-    content: mockContent
+    label: "Searching for",
+    content: mockContent,
+    checkFilterDisabled: (filterDisabled) =>
+        App.filtersDisabled(filterDisabled)
 };
 
 import SearchFilter from './SearchFilter.jsx'
@@ -27,6 +35,34 @@ describe('Component: SearchFilter', () => {
         expect(component).toMatchSnapshot();
     });
 
+    describe('onSearchFilter', () => {
+        const search = component.children[0];
+        let input = search.children[0];
+        test('renders input search filter with value updated', () => {
+            input.props.onChange(eventMock);
+            const component = SearchFilterComponent.toJSON();
+            const search = component.children[0];
+            input = search.children[0];
+            expect(input.props.value).toBe('my new value');
+        });
+
+        test('check filter is not disabled when search filter its valid', () => {
+            spyOn(App, 'filtersDisabled');
+            input.props.onChange(eventMock);
+            expect(App.filtersDisabled).toHaveBeenCalledWith(false);
+        });
+
+        test('check filter is disabled when search filter its invalid', () => {
+            spyOn(App, 'filtersDisabled');
+            eventMock.target.value = '';
+            input.props.onChange(eventMock);
+            expect(App.filtersDisabled).toHaveBeenCalledWith(true);
+            eventMock.target.value = 'Searching for';
+            input.props.onChange(eventMock);
+            expect(App.filtersDisabled).toHaveBeenCalledWith(true);
+        });
+    });
+
     describe('Search', () => {
         const search = component.children[0];
         test('renders search', () => {
@@ -40,6 +76,10 @@ describe('Component: SearchFilter', () => {
 
         test('renders input with icon', () => {
             expect(search.children.length).toBe(2);
+        });
+
+        describe('onSearchFilter', () => {
+
         });
 
         describe('Input', () => {

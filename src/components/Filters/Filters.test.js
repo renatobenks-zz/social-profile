@@ -42,7 +42,7 @@ describe('Component: Filters', () => {
         test('renders button for get options in filters and filter', () => {
             const button = filters.children[filters.children.length-1];
             expect(button.type).toBe('button');
-            expect(button.children[0]).toBe('Filter');
+            expect(button.children[0]).toBe('filter');
         });
     });
 });
