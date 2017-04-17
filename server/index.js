@@ -65,12 +65,24 @@ if (isDeveloping) {
     }));
 } else {
     server.use(morgan('combined'));
-    server.use('/build/public', express.static(webpack_production.output.path));
+    server.use('/build/public',
+        express.static(webpack_production.output.path)
+    );
+
     fs.readFile('assets.json', 'utf-8', (err, data) => {
         if (err) throw err;
         assets = JSON.parse(data);
     });
 }
+
+server.use('/public',
+    express.static(
+        path.join(
+            __dirname.split('server')[0],
+            'public'
+        )
+    )
+);
 
 const renderPage = (assets) => {
     return `<!doctype html>
