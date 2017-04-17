@@ -1,31 +1,17 @@
-import React, { Component } from 'react';
-import { Search } from 'semantic-ui-react';
+import React, { Component } from 'react'
+import SearchField from '../SearchField/SearchField.jsx'
 
 class SearchFilter extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            content: [],
-            value: props.label
+            content: { status: props.content}
         };
 
         this.onSearchFilter = this.onSearchFilter.bind(this);
     }
 
-    componentWillMount () {
-        this.setState({
-            content: this.props.content.map(item => ({
-                title: item.text,
-                description: item.user
-            }))
-        });
-    }
-
-    onSearchFilter (event, value) {
-        this.setState({
-            value
-        });
-
+    onSearchFilter (value) {
         if (!value || value === this.props.label)
             this.props.checkFilterDisabled(true);
         else {
@@ -35,15 +21,11 @@ class SearchFilter extends Component {
 
     render () {
         return (
-            <Search
-                onSearchChange={this.onSearchFilter}
-                showNoResults={false}
-                selectFirstResult={true}
-                loading={false}
-                icon="search"
-                input="text"
-                value={this.state.value}
-                results={this.state.content}
+            <SearchField
+                label={this.props.label}
+                onSearch={this.onSearchFilter}
+                selectFirstResult={false}
+                content={this.state.content}
             />
         )
     }
