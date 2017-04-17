@@ -30,8 +30,16 @@ describe('Component: App', () => {
     });
 
     describe('filtersDisabled', () => {
-        const getFiltersInApp = (component) =>
-            component.children[1].children[1].children[1];
+        const getFiltersInApp = (component) => {
+            for (let AppChild of component.children) {
+                if (AppChild.props.className === 'App-header') {
+                    return AppChild.children
+                        .filter(child =>
+                            child.props.className === 'App-filters'
+                        )[0].children[1];
+                }
+            }
+        };
 
         const getSearchFilter = (component) =>
             getFiltersInApp(component).children[0];
