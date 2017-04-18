@@ -33,7 +33,6 @@ describe('Component: SearchField', () => {
     describe('onSearch', () => {
         eventMock.target.value = 'my new value';
         beforeEach(() => {
-            spyOn(mockSearch, 'onSearch');
             input.props.onChange(eventMock);
         });
 
@@ -49,6 +48,8 @@ describe('Component: SearchField', () => {
         });
 
         test('search when search value change', () => {
+            spyOn(mockSearch, 'onSearch');
+            input.props.onChange(eventMock);
             expect(mockSearch.onSearch).toHaveBeenCalledWith(
                 'my new value'
             );
@@ -66,15 +67,15 @@ describe('Component: SearchField', () => {
                 expect(icon.type).toBe('i');
             });
 
-            describe('with icon', () => {
-                test('get the renders search with icon', () => {
-                    expect(search.props.className.split(' ')).toEqual(
-                        expect.arrayContaining(
-                            ['icon', 'input']
-                        )
-                    );
-                });
+            test('get the renders search with icon', () => {
+                expect(search.props.className.split(' ')).toEqual(
+                    expect.arrayContaining(
+                        ['icon', 'input']
+                    )
+                );
+            });
 
+            describe('with icon', () => {
                 test('get the renders search icon when icon enabled', () => {
                     expect(icon.props.className.split(' ')).toEqual(
                         expect.arrayContaining(
@@ -92,14 +93,6 @@ describe('Component: SearchField', () => {
 
                 test('renders search with no icon', () => {
                     expect(component).toMatchSnapshot();
-                });
-
-                test('get the renders search with no icon', () => {
-                    expect(search.props.className.split(' ')).not.toEqual(
-                        expect.arrayContaining(
-                            ['icon']
-                        )
-                    );
                 });
 
                 test('no renders search icon when icon is disabled', () => {
