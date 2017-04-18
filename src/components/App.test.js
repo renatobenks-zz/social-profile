@@ -64,12 +64,12 @@ describe('Component: App', () => {
         });
 
         test('filters its disabled when search filter changes with invalid value', () => {
-            eventMock.target.value = 'What you searching for?';
+            eventMock.target.value = '';
             input.props.onChange(eventMock);
             let FiltersButton = getFiltersButton(AppComponent.toJSON());
             expect(FiltersButton.props.disabled).toBe(true);
 
-            eventMock.target.value = '';
+            eventMock.target.value = 'What you searching for?';
             input.props.onChange(eventMock);
             FiltersButton = getFiltersButton(AppComponent.toJSON());
             expect(FiltersButton.props.disabled).toBe(true);

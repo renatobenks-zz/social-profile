@@ -5,14 +5,15 @@ import { eventMock, mockStatus } from '../components.mock';
 import SearchFilter from './SearchFilter.jsx'
 
 const App = {
-    filtersDisabled: (filterDisabled) => ({filterDisabled})
+    checkFilterDisabled: filterDisabled => {
+        return filterDisabled;
+    }
 };
 
 const propsSearchFilterComponent = {
     label: "Searching for",
     content: mockStatus,
-    checkFilterDisabled: (filterDisabled) =>
-        App.filtersDisabled(filterDisabled)
+    checkFilterDisabled: filterDisabled => App.checkFilterDisabled(filterDisabled)
 };
 
 const SearchFilterComponent = ReactRender.create(
@@ -31,24 +32,25 @@ describe('Component: SearchFilter', () => {
         let input = search.children[0];
         test('renders input search filter with value updated', () => {
             input.props.onChange(eventMock);
-            const component = SearchFilterComponent.toJSON();
-            expect(component).toMatchSnapshot();
+            expect(SearchFilterComponent.toJSON()).toMatchSnapshot();
         });
 
         test('check filter is not disabled when search filter its valid', () => {
-            spyOn(App, 'filtersDisabled');
+            spyOn(App, 'checkFilterDisabled');
             input.props.onChange(eventMock);
-            expect(App.filtersDisabled).toHaveBeenCalledWith(false);
+            expect(App.checkFilterDisabled).toHaveBeenCalledWith(false);
         });
 
         test('check filter is disabled when search filter its invalid', () => {
-            spyOn(App, 'filtersDisabled');
+            spyOn(App, 'checkFilterDisabled');
+
             eventMock.target.value = '';
             input.props.onChange(eventMock);
-            expect(App.filtersDisabled).toHaveBeenCalledWith(true);
+            expect(App.checkFilterDisabled).toHaveBeenCalledWith(true);
+
             eventMock.target.value = 'Searching for';
             input.props.onChange(eventMock);
-            expect(App.filtersDisabled).toHaveBeenCalledWith(true);
+            expect(App.checkFilterDisabled).toHaveBeenCalledWith(true);
         });
     });
 });

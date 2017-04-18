@@ -12,11 +12,9 @@ class SearchFilter extends Component {
     }
 
     onSearchFilter (value) {
-        if (!value || value === this.props.label)
-            this.props.checkFilterDisabled(true);
-        else {
-            this.props.checkFilterDisabled(false);
-        }
+        if (!value || value === this.props.label) {
+            return this.props.checkFilterDisabled(true);
+        } this.props.checkFilterDisabled(false);
     }
 
     render () {
