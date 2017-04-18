@@ -8,7 +8,8 @@ import App from './components/App.jsx'
 const status = [
     { user: 'Elton', text: 'nothing interesting' },
     { user: 'Elton', text: 'status updated' },
-    { user: 'Elton', text: 'my status' },
+    { user: 'Vinicius', text: 'my status' },
+    { user: 'Vinicius', text: 'my other status' },
     { user: 'Vinicius', text: 'other status' }
 ];
 
