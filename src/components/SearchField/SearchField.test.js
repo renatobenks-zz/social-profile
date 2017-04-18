@@ -5,7 +5,7 @@ import { mockStatus, mockFriends, eventMock } from '../components.mock'
 import SearchField from './SearchField.jsx'
 
 const mockSearch = {
-    onSearch: (value) => ({value})
+    onSearch: (value, results) => ({value, results})
 };
 
 const propsField = {
@@ -13,7 +13,7 @@ const propsField = {
     content: {status: mockStatus},
     firstResult: true,
     icon: "search",
-    onSearch: (value) => mockSearch.onSearch(value)
+    onSearch: (value, results) => mockSearch.onSearch(value, results)
 };
 
 const createComponent = (props) =>
@@ -30,8 +30,54 @@ describe('Component: SearchField', () => {
         expect(component).toMatchSnapshot();
     });
 
+    describe('onFocus', () => {
+        test('renders in search the empty value when search its focus', () => {
+            input.props.onFocus(eventMock);
+            let component = SearchFieldComponent.toJSON();
+            expect(component).toMatchSnapshot();
+        });
+
+        test('stop propagation in search focus', () => {
+            spyOn(eventMock, 'stopPropagation');
+            input.props.onFocus(eventMock);
+            expect(eventMock.stopPropagation).toHaveBeenCalled();
+        });
+
+        test('get the search value renders when search its focus with label value', () => {
+            expect(input.props.value).toBe(propsField.label);
+            input.props.onFocus(eventMock);
+            let component = SearchFieldComponent.toJSON();
+            let search = component.children[0];
+            input = search.children[0];
+            expect(input.props.value).toBe('');
+        });
+    });
+
+    describe('onBlur', () => {
+        test('renders in search the label value when search its blur', () => {
+            input.props.onBlur(eventMock);
+            let component = SearchFieldComponent.toJSON();
+            expect(component).toMatchSnapshot();
+        });
+
+        test('stop propagation in search focus', () => {
+            spyOn(eventMock, 'stopPropagation');
+            input.props.onBlur(eventMock);
+            expect(eventMock.stopPropagation).toHaveBeenCalled();
+        });
+
+        test('get the search value renders when search its blur with empty value', () => {
+            expect(input.props.value).toBe('');
+            input.props.onBlur(eventMock);
+            let component = SearchFieldComponent.toJSON();
+            let search = component.children[0];
+            input = search.children[0];
+            expect(input.props.value).toBe(propsField.label);
+        });
+    });
+
     describe('onSearch', () => {
-        eventMock.target.value = 'my new value';
+        eventMock.target.value = 'nothing';
         beforeEach(() => {
             input.props.onChange(eventMock);
         });
@@ -44,14 +90,30 @@ describe('Component: SearchField', () => {
             let component = SearchFieldComponent.toJSON();
             let search = component.children[0];
             const input = search.children[0];
-            expect(input.props.value).toBe('my new value');
+            expect(input.props.value).toBe('nothing');
         });
 
-        test('search when search value change', () => {
+        test('update content results matched with search value in the search', () => {
+            let component = SearchFieldComponent.toJSON();
+            const results = component.children[1];
+            expect(results.children.length).toBe(1);
+            const result = results.children[0];
+            const content = {
+                title: result.children[0].children[0],
+                description: result.children[0].children[1]
+            };
+
+            expect(content.title.children[0]).toBe(mockStatus[0].text);
+            expect(content.description.children[0]).toBe(mockStatus[0].user);
+        });
+
+        test('callback for search when search values changes', () => {
             spyOn(mockSearch, 'onSearch');
             input.props.onChange(eventMock);
+            const status = mockStatus[0];
             expect(mockSearch.onSearch).toHaveBeenCalledWith(
-                'my new value'
+                'nothing',
+                [{title: status.text, description: status.user}]
             );
         });
     });
