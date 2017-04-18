@@ -5,11 +5,27 @@ class SearchApp extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            open: false,
+            loading: false,
             content: {
                 status: props.status || [],
                 friends: props.friends || []
             }
         };
+
+        this.onSearchInApp = this.onSearchInApp.bind(this);
+    }
+
+    onSearchInApp (value, results, {focused}) {
+        this.setState({loading: true});
+        if (!focused) return this.setState({
+            open: false, loading: false
+        });
+
+        setTimeout(() => {
+            this.setState({loading: false});
+            this.setState({open: true});
+        }, 600);
     }
 
     render () {
@@ -24,7 +40,9 @@ class SearchApp extends Component {
                     label="What you searching for here?"
                     icon="search"
                     fluid={true}
-                    onSearch={this.onSearchApp}
+                    onSearch={this.onSearchInApp}
+                    open={this.state.open}
+                    loading={this.state.loading}
                     content={this.state.content}
                     firstResult={true}
                     showNoResults={true}
