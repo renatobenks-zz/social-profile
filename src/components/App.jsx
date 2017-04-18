@@ -7,6 +7,8 @@ import Title from './Title/Title.jsx';
 import Content from './Content/Content.jsx';
 import Filters from './Filters/Filters.jsx';
 import SearchFilter from './SearchFilter/SearchFilter.jsx'
+import SearchApp from './SearchApp/SearchApp.jsx'
+
 class App extends Component {
     constructor (props) {
         super(props);
@@ -24,10 +26,11 @@ class App extends Component {
     }
 
     render () {
-        const { title, logo, banner, status } = this.props;
+        const { title, logo, banner, status, friends } = this.props;
         return (
             <div className="App">
                 <Banner banner={banner}/>
+                <SearchApp status={status} friends={friends} />
                 <Header>
                     <Company logo={logo}>
                         <Title title={title} />

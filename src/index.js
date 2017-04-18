@@ -1,9 +1,9 @@
-import 'babel-polyfill';
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
-import logo from '../public/images/logo.svg';
-import App from './components/App.jsx';
+import 'babel-polyfill'
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { AppContainer } from 'react-hot-loader'
+import logo from '../public/images/logo.svg'
+import App from './components/App.jsx'
 
 const status = [
     { user: 'Elton', text: 'nothing interesting' },
@@ -13,8 +13,8 @@ const status = [
 ];
 
 const friends = [
-    { id: 1, user: 'Elton', image: '/public/01.avatar.jpg' },
-    { id: 2, user: 'Vinicius', image: '/public/02.avatar.png' }
+    { id: 1, user: 'Elton', image: '/public/images/01.avatar.jpg' },
+    { id: 2, user: 'Vinicius', image: '/public/images/02.avatar.png' }
 ];
 
 import banner from '../public/images/banner.png';
