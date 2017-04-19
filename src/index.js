@@ -6,11 +6,11 @@ import logo from '../public/images/logo.svg'
 import App from './components/App.jsx'
 
 const status = [
-    { user: 'Elton', text: 'nothing interesting' },
-    { user: 'Elton', text: 'status updated' },
-    { user: 'Vinicius', text: 'my status' },
-    { user: 'Vinicius', text: 'my other status' },
-    { user: 'Vinicius', text: 'other status' }
+    { id: 1, user: 'Elton', text: 'nothing interesting' },
+    { id: 2, user: 'Elton', text: 'status updated' },
+    { id: 3, user: 'Vinicius', text: 'my status' },
+    { id: 4, user: 'Vinicius', text: 'my other status' },
+    { id: 5, user: 'Vinicius', text: 'other status' }
 ];
 
 const friends = [
@@ -18,7 +18,7 @@ const friends = [
     { id: 2, user: 'Vinicius', image: '/public/images/02.avatar.png' }
 ];
 
-import banner from '../public/images/banner.png';
+import banner from '../public/images/banner.png'
 const render = (Container) => {
     ReactDOM.render(
         <AppContainer>
