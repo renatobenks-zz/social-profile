@@ -90,14 +90,6 @@ const renderPage = (assets) => {
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style type="text/css">
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: sans-serif;
-                    background: #d6d6d6;
-                }
-            </style>
             ${assets.vendor.css ? `<link rel="stylesheet" href="${assets.vendor.css}"/>` : ''}
             ${assets.bundle.css ? `<link rel="stylesheet" href="${assets.bundle.css}"/>` : ''}
             <!--
