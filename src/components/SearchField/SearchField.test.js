@@ -153,6 +153,7 @@ describe('Component: SearchField', () => {
                 expect(mockSearch.onSearch).toHaveBeenCalledWith(
                     '',
                     mockStatus.map(status => ({
+                        key: status.id,
                         title: status.text,
                         description: status.user
                     })),
@@ -172,6 +173,7 @@ describe('Component: SearchField', () => {
                 expect(mockSearch.onSearch).toHaveBeenCalledWith(
                     propsField.label,
                     mockStatus.map(status => ({
+                        key: status.id,
                         title: status.text,
                         description: status.user
                     })),
@@ -226,7 +228,7 @@ describe('Component: SearchField', () => {
             const status = mockStatus[0];
             expect(mockSearch.onSearch).toHaveBeenCalledWith(
                 'nothing',
-                [{title: status.text, description: status.user}],
+                [{title: status.text, description: status.user, key: status.id}],
                 {focused: true}
             );
         });

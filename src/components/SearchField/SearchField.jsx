@@ -27,6 +27,7 @@ class SearchField extends Component {
             if (props.content.status.length > 0)
                 props.content.status.map(item => {
                     content.push({
+                        key: item.id,
                         title: item.text,
                         description: item.user
                     });
@@ -36,6 +37,7 @@ class SearchField extends Component {
             if (props.content.friends.length > 0)
                 props.content.friends.map(item => {
                     content.push({
+                        key: `${item.user}-${item.id}`,
                         title: item.user,
                         image: item.image
                     });
