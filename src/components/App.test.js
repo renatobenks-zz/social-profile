@@ -1,13 +1,14 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
-import { eventMock, mockStatus } from './components.mock';
+import { eventMock, mockStatus, mockFriends } from './components.mock';
 
 const propsApp = {
     banner: "banner.png",
     logo: "logo.svg",
     title: "My title app",
-    status: mockStatus
+    status: mockStatus,
+    friends: mockFriends
 };
 
 import App from './App.jsx'
