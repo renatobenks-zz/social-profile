@@ -6,7 +6,7 @@ class Company extends Component {
         const { logo, children } = this.props;
         return (
             <div className="App-company">
-                <Logo logo={logo}/>
+                <Logo logo={logo} />
                 { children }
             </div>
         )
