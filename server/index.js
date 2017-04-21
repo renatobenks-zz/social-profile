@@ -118,7 +118,8 @@ const renderPage = (assets) => {
             -->
             <script>
                 window.INITIAL_STATE = {
-                    title: 'CodeRockr social-profiles.Welcome! Just enjoy'
+                    title: 'CodeRockr social-profiles',
+                    subtitle: 'Welcome! Just enjoy'
                 };
                 window.DEVELOPMENT = ${isDeveloping}
             </script>
