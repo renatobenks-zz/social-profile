@@ -15,8 +15,7 @@ const createComponent = content => ReactRender.create(
     </Content>
 );
 
-const ContentComponent = createComponent(content);
-const component = ContentComponent.toJSON();
+const component = createComponent(content);
 
 describe('Component: Content', () => {
     test('renders without crash', () => {
