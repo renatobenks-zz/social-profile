@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 
-import Banner from './Banner/Banner.jsx';
-import Header from './Header/Header.jsx';
-import Company from './Company/Company.jsx';
-import Title from './Title/Title.jsx';
-import Content from './Content/Content.jsx';
-import Filters from './Filters/Filters.jsx';
+import Banner from './Banner/Banner.jsx'
+
+import Header from './Header/Header.jsx'
+import Company from './Company/Company.jsx'
+import Title from './Title/Title.jsx'
+
+import Content from './Content/Content.jsx'
+import Filters from './Filters/Filters.jsx'
+
 import SearchFilter from './SearchFilter/SearchFilter.jsx'
 import SearchApp from './SearchApp/SearchApp.jsx'
+
+import FriendsList from './FriendsList/FriendsList.jsx'
+import SocialFeed from './SocialFeed/SocialFeed.jsx'
+import Messenger from './Messenger/Messenger.jsx'
 
 class App extends Component {
     constructor (props) {
@@ -26,14 +33,15 @@ class App extends Component {
     }
 
     render () {
-        const { title, logo, banner, status, friends } = this.props;
+        const { title, subtitle, logo, banner, status, friends } = this.props;
+        const content = {status, friends};
         return (
             <div className="App">
-                <Banner banner={banner}/>
+                <Banner banner={banner} />
                 <SearchApp status={status} friends={friends} />
                 <Header>
                     <Company logo={logo}>
-                        <Title title={title} />
+                        <Title title={title} subtitle={subtitle} />
                     </Company>
                     <Filters
                         disabled={this.state.filtersDisabled}
@@ -47,7 +55,9 @@ class App extends Component {
                     </Filters>
                 </Header>
                 <Content>
-
+                    <FriendsList key="friends" friends={friends} />
+                    <SocialFeed key="status" content={content} />
+                    <Messenger key="messenger" friends={friends} />
                 </Content>
             </div>
         );
