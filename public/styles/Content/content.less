@@ -1,9 +1,20 @@
-.ui.grid {
-  .App-content.row {
-    width: 100%;
-    padding: 4rem 0;
-    margin:0 auto;
-    font-size: large;
-    text-align: left;
+.App-content {
+  width: 100%;
+  padding: 1rem;
+  margin:0 auto;
+  font-size: large;
+  text-align: left;
+  .ui.grid .row {
+    padding: 0;
+    > div.column {
+      padding: 1rem;
+    }
+  }
+  .four.column.wide:first-of-type {
+    max-height: 500px;
+    .App-friends {
+      height: 100%;
+      overflow-y: scroll;
+    }
   }
 }
