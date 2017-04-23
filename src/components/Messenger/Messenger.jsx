@@ -30,12 +30,18 @@ class Messenger extends Component {
     }
 
     onUpdateFriendStatus () {
+        const randomFriend = Math.floor(Math.random()*((this.state.friends.length-1)+1));
+        const friends = this.state.friends;
+        const friend = this.state.friends[randomFriend];
+        friend.online = !friend.online;
+        friends.splice(
+            randomFriend,
+            1,
+            friend
+        );
+
         this.setState({
-            friends: this.state.friends.map((friend, index) => {
-                if (index === Math.floor(Math.random()*((this.state.friends.length-1)+1)))
-                    friend.online = !friend.online;
-                return {...friend}
-            })
+            friends
         });
     }
 
