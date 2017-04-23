@@ -1,6 +1,28 @@
 .App-social {
   background: white;
   padding: 2rem;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  hr {
+    margin: 0;
+  }
+  .ui.feed {
+    margin: 0;
+    .event {
+      padding: 2rem;
+      border-bottom: 1px solid #666;
+      background: transparent;
+      -webkit-transition: all 0.3s 0.15s ease-in-out;
+      -moz-transition: all 0.3s 0.15s ease-in-out;
+      -ms-transition: all 0.3s 0.15s ease-in-out;
+      -o-transition: all 0.3s 0.15s ease-in-out;
+      transition: all 0.3s 0.15s ease-in-out;
+      &:hover {
+        background: whitesmoke;
+      }
+    }
+  }
   a {
     color: #ec9d21;
     -webkit-transition: all 0.3s 0.15s;
