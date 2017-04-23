@@ -57,7 +57,6 @@ describe('Component: Banner', () => {
             component = BannerComponent.toJSON();
             expect(component).toMatchSnapshot();
             let componentClass = component.props.className.split(' ');
-            console.log(componentClass);
             expect(componentClass)
                 .not.toEqual(expect.arrayContaining(['active']));
             expect(componentClass)

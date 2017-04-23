@@ -6,7 +6,7 @@ import Content from './Content.jsx'
 const content = [
     <img key="logo" src="logo.svg" alt="logo" />,
     <p key="text">To get started, edit and save to reload.</p>,
-    <code>Obs.: edit src/App.js</code>
+    <code key="observation">Obs.: edit src/App.js</code>
 ];
 
 const createComponent = content => ReactRender.create(

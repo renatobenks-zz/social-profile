@@ -9,10 +9,10 @@ const propsFriend = {
 };
 
 const content = [
-    <label htmlFor="friend">
+    <label key="label" htmlFor="friend">
         My friend
     </label>,
-    <img id="friend" src="friend.png" alt="friend"/>
+    <img key="image" id="friend" src="friend.png" alt="friend"/>
 ];
 
 const createComponent = (props={}, content='') => ReactRender.create(
