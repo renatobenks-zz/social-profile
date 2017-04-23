@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Breadcrumb, Feed, Icon } from 'semantic-ui-react'
+import { Feed, Icon } from 'semantic-ui-react'
 
+import BreadcrumbRoute from '../BreadcrumbRoute/BreadcrumbRoute.jsx'
 class SocialFeed extends Component {
     constructor (props) {
         super(props);
@@ -22,8 +23,6 @@ class SocialFeed extends Component {
         const { content } = this.props;
         let { status, friends } = content;
         this.setState({
-            status,
-            friends,
             content: status.map(item => {
                 date = date - 1000;
                 item.user = friends.filter(friend =>
@@ -59,6 +58,7 @@ class SocialFeed extends Component {
         const { content } = this.state;
         return (
             <div className="App-social">
+                <BreadcrumbRoute default />
                 <h1><Icon name="browser"/>Timeline</h1>
                 <hr/>
                 <Feed>

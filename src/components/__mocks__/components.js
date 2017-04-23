@@ -13,5 +13,10 @@ export const mockFriends = [
 export const eventMock = {
     target: {value: 'my new value'},
     stopPropagation: () => true,
-    stopImmediatePropagation: () => true
+    stopImmediatePropagation: () => true,
+    preventDefault: () => true
+};
+
+export const window = {
+    location: { pathname: '/' }
 };
