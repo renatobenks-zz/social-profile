@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
-import { mockStatus, mockFriends, eventMock } from '../components.mock'
+import { mockStatus, mockFriends, eventMock } from '../__mocks__/components'
 import SearchField from './SearchField.jsx'
 
 const mockSearch = {

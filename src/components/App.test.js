@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
-import { eventMock, mockStatus, mockFriends } from './components.mock';
+import { eventMock, mockStatus, mockFriends } from './__mocks__/components';
 
 const propsApp = {
     banner: "banner.png",

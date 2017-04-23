@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
-import { eventMock, mockStatus } from '../components.mock';
+import { eventMock, mockStatus } from '../__mocks__/components';
 import SearchFilter from './SearchFilter.jsx'
 
 const App = {
