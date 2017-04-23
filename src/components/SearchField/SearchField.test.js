@@ -9,10 +9,10 @@ const mockSearch = {
 };
 
 const propsField = {
-    label: "First value like label",
+    label: 'First value like label',
     content: {status: mockStatus},
     firstResult: true,
-    icon: "search",
+    icon: 'search',
     onSearch: (value, results, props) => mockSearch.onSearch(value, results, props)
 };
 

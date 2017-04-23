@@ -4,9 +4,9 @@ import ReactRender from 'react-test-renderer'
 import { eventMock, mockStatus, mockFriends } from './__mocks__/components';
 
 const propsApp = {
-    banner: "banner.png",
-    logo: "logo.svg",
-    title: "My title app",
+    banner: 'banner.png',
+    logo: 'logo.svg',
+    title: 'My title app',
     status: mockStatus,
     friends: mockFriends
 };

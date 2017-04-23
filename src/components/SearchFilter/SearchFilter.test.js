@@ -11,7 +11,7 @@ const App = {
 };
 
 const propsSearchFilterComponent = {
-    label: "Searching for",
+    label: 'Searching for',
     content: mockStatus,
     checkFilterDisabled: filterDisabled => App.checkFilterDisabled(filterDisabled)
 };
