@@ -59,10 +59,15 @@ class Messenger extends Component {
                                     src={friend.image}
                                     shape="circular"
                                 />
-                                <Icon
-                                    color={friend.online ? 'green' : 'grey'}
-                                    name="circle"
-                                />
+                                <div className="icons">
+                                    <Icon
+                                        color={friend.online ? 'green' : 'grey'}
+                                        name="circle"
+                                    />
+                                    {friend.favorite ?
+                                        <Icon className="active" name="star" /> : ''
+                                    }
+                                </div>
                             </Friend.Content>
                         </Friend>
                     )}
