@@ -10,10 +10,20 @@
       padding: 1rem;
     }
   }
-  .four.column.wide:first-of-type {
-    max-height: 500px;
+  .App-content-left {
+    background: transparent;
+    padding: 0;
+    > div {
+      margin: 2rem 0;
+      &:first-of-type {
+        margin-top: 0;
+      }
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
     .App-friends {
-      height: 100%;
+      max-height: 500px;
       overflow-y: scroll;
     }
   }
