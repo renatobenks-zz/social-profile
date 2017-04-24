@@ -4,10 +4,11 @@ import { Icon } from 'semantic-ui-react'
 class Title extends Component {
     render () {
         const { title, subtitle, children, icon } = this.props;
-        const content = icon ? [<Icon key="icon" name={icon} />] : [];
+        const content = [];
         if (title)
             content.push(
                 <h1 key="title">
+                    {icon ? <Icon key="icon" name={icon} /> : ''}
                     {title}
                 </h1>
             );
