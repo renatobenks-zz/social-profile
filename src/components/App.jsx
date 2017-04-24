@@ -55,9 +55,17 @@ class App extends Component {
                     </Filters>
                 </Header>
                 <Content>
-                    <FriendsList key="friends" friends={friends} />
-                    <SocialFeed key="status" content={content} />
-                    <Messenger key="messenger" friends={friends} />
+                    <Content.Row>
+                        <Content.Column width="4">
+                            <FriendsList friends={friends} />
+                        </Content.Column>
+                        <Content.Column width="8">
+                            <SocialFeed content={content} />
+                        </Content.Column>
+                        <Content.Column width="4">
+                            <Messenger friends={friends} />
+                        </Content.Column>
+                    </Content.Row>
                 </Content>
             </div>
         );
