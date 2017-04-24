@@ -12,6 +12,7 @@ import Filters from './Filters/Filters.jsx'
 import SearchFilter from './SearchFilter/SearchFilter.jsx'
 import SearchApp from './SearchApp/SearchApp.jsx'
 
+import Account from './Account/Account.jsx'
 import FriendsList from './FriendsList/FriendsList.jsx'
 import SocialFeed from './SocialFeed/SocialFeed.jsx'
 import StatusList from './StatusList/StatusList.jsx'
@@ -34,7 +35,7 @@ class App extends Component {
     }
 
     render () {
-        const { title, subtitle, logo, banner, status, friends } = this.props;
+        const { title, subtitle, logo, banner, status, friends, user } = this.props;
         const content = {status, friends};
         return (
             <div className="App">
@@ -58,7 +59,21 @@ class App extends Component {
                 <Content>
                     <Content.Row>
                         <Content.Column width="4">
-                            <FriendsList friends={friends} />
+                            <div className="App-content-left">
+                                <Account user={user}>
+                                    <Account.Management>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Configurations</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Change password</a>
+                                            </li>
+                                        </ul>
+                                    </Account.Management>
+                                </Account>
+                                <FriendsList friends={friends} />
+                            </div>
                         </Content.Column>
                         <Content.Column width="8">
                             <SocialFeed>

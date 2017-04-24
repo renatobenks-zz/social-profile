@@ -8,7 +8,11 @@ const propsApp = {
     logo: 'logo.svg',
     title: 'My title app',
     status: mockStatus,
-    friends: mockFriends
+    friends: mockFriends,
+    user: {
+        name: 'renato',
+        friends: mockFriends
+    }
 };
 
 import App from './App.jsx'

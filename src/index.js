@@ -69,6 +69,7 @@ const render = (Container) => {
             <Container
                 banner={banner}
                 logo={logo}
+                user={user}
                 status={user.feed.status}
                 friends={user.friends}
                 {...window.INITIAL_STATE}
