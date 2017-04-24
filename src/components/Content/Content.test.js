@@ -22,18 +22,22 @@ describe('Component: Content', () => {
         expect(component).toMatchSnapshot();
     });
 
-    test('renders content with two content children', () => {
-        const component = createComponent([...content].splice(0,2));
-        expect(component).toMatchSnapshot();
-    });
+    describe('Row', () => {
+        test('renders row grid content', () => {
+            expect(createComponent(<Content.Row>{content}</Content.Row>))
+                .toMatchSnapshot();
+        });
 
-    test('renders content with only one content children', () => {
-        const component = createComponent([...content].pop()[0]);
-        expect(component).toMatchSnapshot();
-    });
-
-    test('no renders content when content children is bigger than 3', () => {
-        const component = createComponent([...content, <div>Anything says hello</div>]);
-        expect(component).toMatchSnapshot();
+        describe('Column', () => {
+            test('renders columns in row content grid', () => {
+                expect(createComponent(
+                    <Content.Row>
+                        <Content.Column width="8">
+                            {content}
+                        </Content.Column>
+                    </Content.Row>
+                )).toMatchSnapshot();
+            });
+        });
     });
 });
