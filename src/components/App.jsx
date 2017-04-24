@@ -14,6 +14,7 @@ import SearchApp from './SearchApp/SearchApp.jsx'
 
 import FriendsList from './FriendsList/FriendsList.jsx'
 import SocialFeed from './SocialFeed/SocialFeed.jsx'
+import StatusList from './StatusList/StatusList.jsx'
 import Messenger from './Messenger/Messenger.jsx'
 
 class App extends Component {
@@ -60,7 +61,9 @@ class App extends Component {
                             <FriendsList friends={friends} />
                         </Content.Column>
                         <Content.Column width="8">
-                            <SocialFeed content={content} />
+                            <SocialFeed>
+                                <StatusList content={content}/>
+                            </SocialFeed>
                         </Content.Column>
                         <Content.Column width="4">
                             <Messenger friends={friends} />
