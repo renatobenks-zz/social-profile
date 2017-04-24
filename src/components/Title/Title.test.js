@@ -21,21 +21,26 @@ describe('Component: Title', () => {
         expect(component).toMatchSnapshot();
     });
 
-    test('renders title with subtitle', () => {
-        const component = createComponent(
-            {...propsTitle, subtitle: 'My subtitle'}
-        );
+    test('renders on component the title with additional icon', () => {
+        expect(createComponent({...propsTitle, icon: 'browser'}))
+            .toMatchSnapshot();
+    });
 
-        expect(component).toMatchSnapshot();
+    test('renders on component a additional icon', () => {
+        expect(createComponent({icon: 'browser'})).toMatchSnapshot();
+    });
+
+    test('renders title with subtitle', () => {
+        expect(createComponent({...propsTitle, subtitle: 'My subtitle'}))
+            .toMatchSnapshot();
     });
 
     test('renders content children in', () => {
-        const component = createComponent(<img src="logo.svg" alt="logo"/>);
-        expect(component).toMatchSnapshot();
+        expect(createComponent({}, <img src="logo.svg" alt="logo"/>))
+            .toMatchSnapshot();
     });
 
     test('no renders content missing content, title and subtitle', () => {
-        const component = createComponent();
-        expect(component).toMatchSnapshot();
+        expect(createComponent()).toMatchSnapshot();
     });
 });

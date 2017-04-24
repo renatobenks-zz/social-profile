@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import { Icon } from 'semantic-ui-react'
 
 class Title extends Component {
     render () {
-        const { title, subtitle, children } = this.props;
-        const content = [];
+        const { title, subtitle, children, icon } = this.props;
+        const content = icon ? [<Icon name={icon} />] : [];
         if (title)
             content.push(
                 <h1 key="title">
@@ -19,10 +20,10 @@ class Title extends Component {
             );
         }
 
+        content.splice(0, 0, children);
         return (
             <div className="App-title">
                 {content}
-                {children}
             </div>
         );
     }
