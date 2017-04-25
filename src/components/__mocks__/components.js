@@ -7,7 +7,8 @@ export const mockStatus = [
 
 export const mockFriends = [
     { id: 1, user: 'Elton', image: 'elton.png', favorite: true },
-    { id: 2, user: 'Vinicius', image: 'vinicius.png', favorite: false }
+    { id: 2, user: 'Vinicius', image: 'vinicius.png', favorite: false },
+    { id: 3, user: '', image: 'desconhecido.png', favorite: false }
 ];
 
 export const eventMock = {

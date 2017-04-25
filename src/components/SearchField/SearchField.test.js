@@ -16,22 +16,21 @@ const propsField = {
     onSearch: (value, results, props) => mockSearch.onSearch(value, results, props)
 };
 
-const createComponent = (props) =>
-    ReactRender.create(
-        <SearchField {...props} />
-    );
+const createComponent = props => ReactRender.create(
+    <SearchField {...props} />
+);
+
 const SearchFieldComponent = createComponent(propsField);
 let component = SearchFieldComponent.toJSON();
 
 describe('Component: SearchField', () => {
-    let search = component.children[0];
-    let input = search.children[0];
     test('renders without crash', () => {
         expect(component).toMatchSnapshot();
     });
 
+    let search = component.children[0];
     describe('Search', () => {
-        test('get search input with icon', () => {
+        test('get the search render with input and icon', () => {
             expect(search.children.length).toBe(2);
         });
 
@@ -79,6 +78,7 @@ describe('Component: SearchField', () => {
             });
         });
 
+        let input = search.children[0];
         describe('Input', () => {
             test('get the renders input', () => {
                 expect(input.type).toBe('input');
@@ -95,6 +95,8 @@ describe('Component: SearchField', () => {
             });
         });
     });
+
+    let input = search.children[0];
 
     describe('onFocus', () => {
         test('renders in search the empty value when search its focus', () => {
@@ -150,13 +152,15 @@ describe('Component: SearchField', () => {
         describe('onFocus', () => {
             test('updates the search when focus changes', () => {
                 input.props.onFocus(eventMock);
+                const status = mockStatus.map(status => ({
+                    key: status.id,
+                    title: status.text,
+                    description: status.user
+                }));
+
                 expect(mockSearch.onSearch).toHaveBeenCalledWith(
                     '',
-                    mockStatus.map(status => ({
-                        key: status.id,
-                        title: status.text,
-                        description: status.user
-                    })),
+                    status,
                     {focused: true}
                 );
             });
@@ -170,13 +174,15 @@ describe('Component: SearchField', () => {
         describe('onBlur', () => {
             test('updates the search when focus changes', () => {
                 input.props.onBlur(eventMock);
+                const status = mockStatus.map(status => ({
+                    key: status.id,
+                    title: status.text,
+                    description: status.user
+                }));
+
                 expect(mockSearch.onSearch).toHaveBeenCalledWith(
                     propsField.label,
-                    mockStatus.map(status => ({
-                        key: status.id,
-                        title: status.text,
-                        description: status.user
-                    })),
+                    status,
                     {focused: false}
                 );
             });
@@ -190,22 +196,20 @@ describe('Component: SearchField', () => {
 
     describe('onSearch', () => {
         eventMock.target.value = 'nothing';
-        beforeEach(() => {
-            input.props.onChange(eventMock);
-        });
-
         test('renders the updates value in search', () => {
+            input.props.onChange(eventMock);
             expect(SearchFieldComponent.toJSON()).toMatchSnapshot();
         });
 
         test('update search value', () => {
+            input.props.onChange(eventMock);
             let component = SearchFieldComponent.toJSON();
             let search = component.children[0];
-            const input = search.children[0];
-            expect(input.props.value).toBe('nothing');
+            expect(search.children[0].props.value).toBe('nothing');
         });
 
         test('update content results matched with search value in the search', () => {
+            input.props.onChange(eventMock);
             let component = SearchFieldComponent.toJSON();
             const results = component.children[1];
             expect(results.children.length).toBe(1);
@@ -220,12 +224,11 @@ describe('Component: SearchField', () => {
         });
 
         test('callback for search when search values changes', () => {
-            spyOn(mockSearch, 'onSearch');
-            eventMock.target.value = propsField.label;
             input.props.onFocus(eventMock);
+            spyOn(mockSearch, 'onSearch');
             eventMock.target.value = 'nothing';
             input.props.onChange(eventMock);
-            const status = mockStatus[0];
+            const status = {... mockStatus[0]};
             expect(mockSearch.onSearch).toHaveBeenCalledWith(
                 'nothing',
                 [{title: status.text, description: status.user, key: status.id}],
@@ -243,6 +246,67 @@ describe('Component: SearchField', () => {
                 input = search.children[0];
                 expect(input.props.value).toBe('');
             }
+        });
+    });
+
+    describe('maxResults', () => {
+        let SearchFieldComponent;
+        let component;
+        let input;
+        const event = {...eventMock, target: {value: 'status'}};
+        const props = {...propsField};
+        const { content } = props;
+
+        beforeEach(() => {
+            content.status = [...content.status, ...mockStatus];
+            content.status = content.status.map((status, index) => ({
+                ...status, id: index + 1
+            }));
+        });
+
+        describe('onChange', () => {
+            beforeEach(() => {
+                SearchFieldComponent = createComponent(props);
+                component = SearchFieldComponent.toJSON();
+                input = component.children[0].children[0];
+            });
+
+            test('renders max five results in the search for default results search', () => {
+                input.props.onChange(event);
+                expect(SearchFieldComponent.toJSON()).toMatchSnapshot();
+            });
+
+            test('renders five results in the search for default results search', () => {
+                event.target.value = 's';
+                input.props.onChange(event);
+                expect(SearchFieldComponent.toJSON()).toMatchSnapshot();
+            });
+
+            test('renders max results defined in the search for results search', () => {
+                SearchFieldComponent = createComponent({
+                    ...props,
+                    maxResults: 7
+                });
+
+                component = SearchFieldComponent.toJSON();
+                input = component.children[0].children[0];
+                event.target.value = 'status';
+                input.props.onChange(event);
+                expect(SearchFieldComponent.toJSON()).toMatchSnapshot();
+            });
+
+            test('renders max results in the search for results search', () => {
+                event.target.value = 's';
+                SearchFieldComponent = createComponent({
+                    ...props,
+                    maxResults: 7
+                });
+
+                component = SearchFieldComponent.toJSON();
+                input = component.children[0].children[0];
+                input.props.onChange(event);
+                expect(SearchFieldComponent.toJSON()).toMatchSnapshot();
+            });
         });
     });
 
@@ -281,29 +345,9 @@ describe('Component: SearchField', () => {
 
         describe('Content: status', () => {
             test('get the renders status content to match search', () => {
-                expect(results.children.length).toBe(mockStatus.length);
-            });
-
-            test('get the renders title of status results', () => {
-                for (let result of results.children) {
-                    const contentResults = mockStatus[
-                        results.children.indexOf(result)
-                    ];
-                    const content = result.children[0];
-                    const title = content.children[0];
-                    expect(title.children[0]).toBe(contentResults.text);
-                }
-            });
-
-            test('get the renders description of status results', () => {
-                for (let result of results.children) {
-                    const contentResults = mockStatus[
-                        results.children.indexOf(result)
-                    ];
-                    const content = result.children[0];
-                    const description = content.children[1];
-                    expect(description.children[0]).toBe(contentResults.user);
-                }
+                expect(results.children.length).toBe(
+                    mockStatus.length > 5 ? 5 : mockStatus.length
+                );
             });
         });
 
@@ -314,29 +358,9 @@ describe('Component: SearchField', () => {
             const results = component.children[1];
 
             test('get the renders friends content to match search', () => {
-                expect(results.children.length).toBe(mockFriends.length);
-            });
-
-            test('get the renders title of friends results', () => {
-                for (let result of results.children) {
-                    const contentResults = mockFriends[
-                        results.children.indexOf(result)
-                    ];
-                    const content = result.children[1];
-                    const title = content.children[0];
-                    expect(title.children[0]).toBe(contentResults.user);
-                }
-            });
-
-            test('get the renders image of friends content', () => {
-                for (let result of results.children) {
-                    const contentResults = mockFriends[
-                        results.children.indexOf(result)
-                    ];
-                    const image = result.children[0];
-                    const img = image.children[0];
-                    expect(img.props.src).toBe(contentResults.image);
-                }
+                expect(results.children.length).toBe(
+                    mockFriends.length > 5 ? 5 : mockFriends.length
+                );
             });
         });
 
@@ -344,57 +368,15 @@ describe('Component: SearchField', () => {
             propsField.content.status = mockStatus;
             let component = createComponent(propsField).toJSON();
             const results = component.children[1];
-
-            let contentResults;
-            beforeEach(() => {
-                contentResults = [];
-                mockStatus.map(status => contentResults.push(status));
-                mockFriends.map(friend => contentResults.push(friend));
-            });
+            const contentResults = [
+                ...mockStatus,
+                ...mockFriends
+            ];
 
             test('get the renders the status & friends content to match search', () => {
-                expect(results.children.length).toBe(contentResults.length);
-            });
-
-            test('get the renders title of status and friends results', () => {
-                for (let result of results.children) {
-                    let resultsContent = (contentResults[
-                        results.children.indexOf(result)
-                    ]);
-
-                    let content = result.children[
-                        result.children[1] ? 1 : 0
-                    ];
-                    let title = content.children[0];
-                    if (result.children[1]) {
-                        expect(title.children[0])
-                            .toBe(resultsContent.user);
-                    } else {
-                        expect(title.children[0])
-                            .toBe(resultsContent.text);
-                    }
-                }
-            });
-
-            test('get the renders content of status and friends results', () => {
-                for (let result of results.children) {
-                    let resultsContent = contentResults[
-                        results.children.indexOf(result)
-                    ];
-
-                    let content = result.children[0];
-                    content = content.children[
-                        result.children[1] ? 0 : 1
-                    ];
-
-                    if (result.children[1]) {
-                        expect(content.props.src)
-                            .toBe(resultsContent.image);
-                    } else {
-                        expect(content.children[0])
-                            .toBe(resultsContent.user);
-                    }
-                }
+                expect(results.children.length).toBe(
+                    contentResults.length > 5 ? 5 : contentResults.length
+                );
             });
         });
     });

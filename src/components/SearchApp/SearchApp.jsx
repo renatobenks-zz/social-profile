@@ -18,13 +18,13 @@ class SearchApp extends Component {
 
     onSearchInApp (value, results, {focused}) {
         this.setState({loading: true});
-        if (!focused) return this.setState({
-            open: false, loading: false
-        });
+        if (!focused)
+            return this.setState({
+                open: false, loading: false
+            });
 
         setTimeout(() => {
-            this.setState({loading: false});
-            this.setState({open: true});
+            this.setState({loading: false, open: true});
         }, 600);
     }
 
@@ -47,6 +47,7 @@ class SearchApp extends Component {
                     firstResult={true}
                     showNoResults={true}
                     noResults={noResults}
+                    maxResults={3}
                 />
             </div>
         )

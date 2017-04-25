@@ -12,7 +12,8 @@ class SearchField extends Component {
             showNoResults: props.showNoResults || false,
             noResults: props.showNoResults ? props.noResults  : {},
             firstResult: props.firstResult || false,
-            fluid: props.fluid || false
+            fluid: props.fluid || false,
+            maxResults: props.maxResults || 5
         };
 
         this.onSearch = this.onSearch.bind(this);
@@ -21,31 +22,32 @@ class SearchField extends Component {
     }
 
     componentWillMount () {
-        const { props } = this;
+        const { status, friends } = this.props.content;
         let content = [];
-        if (props.content.status)
-            if (props.content.status.length > 0)
-                props.content.status.map(item => {
-                    content.push({
-                        key: item.id,
-                        title: item.text,
-                        description: item.user
-                    });
-                });
+        if (status && status.length > 0)
+            content = [
+                ...content,
+                ...status.map(item => ({
+                    key: item.id,
+                    title: item.text,
+                    description: item.user
+                }))
+            ];
 
-        if (props.content.friends)
-            if (props.content.friends.length > 0)
-                props.content.friends.map(item => {
-                    content.push({
-                        key: `${item.user}-${item.id}`,
-                        title: item.user,
-                        image: item.image
-                    });
-                });
+        if (friends && friends.length > 0)
+            content = [
+                ...content,
+                ...friends.map(item => ({
+                    key: `${item.user}-${item.id}`,
+                    title: item.user ? item.user : 'Desconhecido',
+                    image: item.image
+                }))
+            ];
 
         this.setState({
             content,
-            results: content
+            results: content.length < this.state.maxResults ?
+                content : content.splice(0, this.state.maxResults)
         });
     }
 
@@ -60,10 +62,20 @@ class SearchField extends Component {
         // special characters
         if (/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(value))
             return this.setState({value: ''});
-        const results = this.state.content
-            .filter(item => item.title.toLowerCase()
-                .search(value.toLowerCase()) !== -1
-            );
+        let results = this.state.content
+            .filter(item =>
+                item.title.toLowerCase()
+                    .search(value.toLowerCase()) !== -1);
+
+        if (results.length > this.state.maxResults) {
+            let index = 0;
+            if (results.length >= this.state.maxResults*2)
+                index = Math.floor(Math.random()*((results.length-1)+1));
+            results = results.splice(
+                index,
+                this.state.maxResults
+            )
+        }
 
         this.setState({
             value,
