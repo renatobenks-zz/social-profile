@@ -47,7 +47,7 @@ class Messenger extends Component {
                 <Card.Group>
                     {friends.map(friend =>
                         <Friend key={friend.id} messenger>
-                            <Friend.Content friend={friend} messenger>
+                            <Friend.Content popup friend={friend} messenger>
                                 <Image
                                     floated="left"
                                     avatar

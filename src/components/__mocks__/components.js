@@ -14,7 +14,10 @@ export const eventMock = {
     target: {value: 'my new value'},
     stopPropagation: () => true,
     stopImmediatePropagation: () => true,
-    preventDefault: () => true
+    preventDefault: () => true,
+    currentTarget: {
+        getBoundingClientRect: () => true
+    }
 };
 
 export const window = {

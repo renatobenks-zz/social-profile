@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Feed, Icon } from 'semantic-ui-react'
 
+import FriendPopup from '../FriendPopup/FriendPopup.jsx'
 class Status extends Component {
     constructor (props) {
         super(props);
@@ -27,11 +28,18 @@ class Status extends Component {
         return (
             <Feed.Event>
                 <Feed.Label>
-                    <img src={status.user.image} />
+                    <FriendPopup
+                        friend={status.user}
+                        content={<img src={status.user.image} />}
+                    />
                 </Feed.Label>
                 <Feed.Content>
                     <Feed.Summary>
-                        <Feed.User>{status.user.user}</Feed.User>
+                        <FriendPopup friend={status.user}>
+                            <Feed.User>
+                                {status.user.user}
+                            </Feed.User>
+                        </FriendPopup>
                         <Feed.Date>{status.date}s ago</Feed.Date>
                     </Feed.Summary>
                     <Feed.Extra text>

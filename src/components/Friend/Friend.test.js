@@ -88,6 +88,17 @@ describe('Component: Friend', () => {
             expect(component).toMatchSnapshot();
         });
 
+        test('friend user popup should be enabled for show pop from friend', () => {
+            const component = createComponent(
+                {messenger: true},
+                <Friend.Content popup friend={mockFriends[0]}>
+                    {content}
+                </Friend.Content>
+            );
+
+            expect(component).toMatchSnapshot();
+        });
+
         describe('Description', () => {
             test('renders friend content description', () => {
                 const component = createComponent(
