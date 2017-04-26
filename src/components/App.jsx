@@ -22,20 +22,24 @@ class App extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            user: props.user,
             filtersDisabled: true
         };
 
-        this.filtersDisabled = this.filtersDisabled.bind(this);
+        this.disableFilters = this.disableFilters.bind(this);
     }
 
-    filtersDisabled (filtersDisabled) {
+    disableFilters (filtersDisabled) {
         this.setState({
             filtersDisabled
         });
     }
 
     render () {
-        const { title, subtitle, logo, banner, status, friends, user } = this.props;
+        const { title, subtitle, logo, banner } = this.props;
+        const { user, filtersDisabled } = this.state;
+        const { friends, feed } = user;
+        const { status } = feed;
         const content = {status, friends};
         return (
             <div className="App">
@@ -46,11 +50,11 @@ class App extends Component {
                         <Title title={title} subtitle={subtitle} />
                     </Company>
                     <Filters
-                        disabled={this.state.filtersDisabled}
+                        disabled={filtersDisabled}
                         label="You can filter your list of status here"
                         >
                         <SearchFilter
-                            checkFilterDisabled={this.filtersDisabled}
+                            checkFilterDisabled={this.disableFilters}
                             label="What you searching for?"
                             content={status}
                         />

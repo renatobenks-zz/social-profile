@@ -3,6 +3,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { AppContainer } from 'react-hot-loader'
 import logo from '../public/images/logo.svg'
+import banner from '../public/images/banner.png'
 import App from './components/App.jsx'
 
 const user = {
@@ -10,7 +11,7 @@ const user = {
     logged: true,
     name: 'Renato Benkendorf',
     user: 'renatão',
-    image: '/public/images/02.avatar.jpg',
+    image: '/public/images/02.avatar.png',
     feed: {
         status: [
             { id: 1, user: 'Elton', text: 'nothing interesting' },
@@ -62,16 +63,13 @@ const user = {
     ],
 };
 
-import banner from '../public/images/banner.png'
+window.INITIAL_STATE = {...window.INITIAL_STATE, user};
 const render = (Container) => {
     ReactDOM.render(
         <AppContainer>
             <Container
                 banner={banner}
                 logo={logo}
-                user={user}
-                status={user.feed.status}
-                friends={user.friends}
                 {...window.INITIAL_STATE}
             />
         </AppContainer>,
