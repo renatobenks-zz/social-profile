@@ -29,7 +29,8 @@ export const window = {
         user: {
             name: 'renato',
             friends: mockFriends,
-            feed: {status: mockStatus}
+            feed: {status: mockStatus},
+            image: 'user.png'
         }
     }
 };
