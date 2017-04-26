@@ -22,5 +22,14 @@ export const eventMock = {
 };
 
 export const window = {
-    location: { pathname: '/' }
+    location: { pathname: '/' },
+    INITIAL_STATE: {
+        title: 'My title app',
+        subtitle: 'My monster subtitle',
+        user: {
+            name: 'renato',
+            friends: mockFriends,
+            feed: {status: mockStatus}
+        }
+    }
 };
