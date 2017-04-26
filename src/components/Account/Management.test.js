@@ -1,7 +1,10 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
+import { window } from '../__mocks__/components'
 import Management from './Management.jsx'
+
+global.window = window;
 const createComponent = (content='') => ReactRender.create(
     <Management>
         {content}

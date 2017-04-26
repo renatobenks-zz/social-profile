@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button, Icon, Image } from 'semantic-ui-react'
 
 class Management extends Component {
     render () {
@@ -6,8 +7,18 @@ class Management extends Component {
         return (
             <div className="Account-management">
                 {children}
-                <button className="ui button secondary">Account</button>
-                <button className="ui button primary">Friends</button>
+                <Button.Group>
+                    <Button primary>Friends</Button>
+                    <Button secondary>Account</Button>
+                    <Button className="changes-pic" animated={true}>
+                        <Button.Content visible>
+                            <Icon size="large" name="picture" />
+                        </Button.Content>
+                        <Button.Content hidden>
+                            <Image avatar src={window.INITIAL_STATE.user.image} />
+                        </Button.Content>
+                    </Button>
+                </Button.Group>
             </div>
         );
     }
