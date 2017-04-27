@@ -8,13 +8,23 @@ class Account extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            solicitations: {
-                friends: [
-                    {id: '667', user: '', image: '/public/images/02.avatar.png'}
-                ]
+            user: {
+                active: true
             },
             notifications: {
                 active: false
+            },
+            solicitations: {
+                active: false,
+                friends: [
+                    {
+                        id: '667',
+                        user: '',
+                        image: '/public/images/02.avatar.png',
+                        favorite: false,
+                        online: true
+                    }
+                ]
             },
             default: (
                 <div className="image user">
@@ -28,7 +38,8 @@ class Account extends Component {
             )
         };
 
-        this.activeNotifications = this.activeNotifications.bind(this);
+        this._active = this._active.bind(this);
+        this._open = this._open.bind(this);
         this.openNotifications = this.openNotifications.bind(this);
         this.openSolicitationsFriends = this.openSolicitationsFriends.bind(this);
         this.onBackHome = this.onBackHome.bind(this);
@@ -41,43 +52,57 @@ class Account extends Component {
         });
     }
 
-    activeNotifications () {
-        this.setState(({notifications}) => ({
-            notifications: {
-                active: !notifications.active
-            }
-        }));
+    _active (item, prop) {
+        const { active } = item;
+        const items = {...this.state};
+        for (let item in items) {
+            if (items[item].active === undefined) delete items[item];
+            else items[item].active = false;
+        }
+
+        this.setState({
+            ...items,
+            [prop]: {...item, active: !active}
+        });
+    }
+
+    _open (item, content) {
+        const origin = item;
+        item = {...this.state[item]};
+        const { active } = item;
+        if (active) return this.onBackHome();
+        this._active(item, origin);
+        this.setState({
+            user: {...this.state.user, active: false},
+            content
+        });
     }
 
     openSolicitationsFriends (event) {
         event.stopPropagation();
-        if (this.state.content !== this.state.default)
-            this.onBackHome();
-        this.setState({
-            content: (
-                <SolicitationsFriends friends={this.state.solicitations.friends} />
-            )
-        });
+        this._open('solicitations', (
+            <div className="solicitations">
+                <SolicitationsFriends
+                    friends={this.state.solicitations.friends}
+                />
+            </div>
+        ));
     }
 
     openNotifications (event) {
         event.stopPropagation();
-        this.activeNotifications();
-        this.setState(({notifications}) => {
-            if (!notifications.active)
-                return {content: this.state.default};
-            return {
-                content: (
-                    <div className="notifications">
-                        <p>No notifications, yet!</p>
-                    </div>
-                )
-            };
-        });
+        this._open('notifications', (
+            <div className="notifications">
+                <p>No notifications, yet!</p>
+            </div>
+        ));
     }
 
     onBackHome () {
         this.setState({
+            user: {...this.state.user, active: true},
+            notifications: {...this.state.notifications, active: false},
+            solicitations: {...this.state.solicitations, active: false},
             content: this.state.default
         });
     }
@@ -105,16 +130,22 @@ class Account extends Component {
                     {this.state.content}
                     <Button.Group>
                         <Button
+                            active={this.state.user.active}
                             title="Back home"
                             onClick={this.onBackHome}
                             icon="home"
                         />
                         <Button
+                            color="green"
+                            active={this.state.solicitations.active}
                             title="Open friends solicitations"
-                            icon="add user"
+                            icon={this.state.solicitations.active
+                                    ? 'group' : 'add user'}
                             onClick={this.openSolicitationsFriends}
                         />
                         <Button
+                            color="blue"
+                            active={this.state.notifications.active}
                             title="Open notifications"
                             onClick={this.openNotifications}
                             icon={this.state.notifications.active
