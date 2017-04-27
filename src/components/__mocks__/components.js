@@ -17,7 +17,12 @@ export const eventMock = {
     stopImmediatePropagation: () => true,
     preventDefault: () => true,
     currentTarget: {
-        getBoundingClientRect: () => true
+        getBoundingClientRect: () => ({
+            width: '120px',
+            height: '120px',
+            top: '40px',
+            left: '40px'
+        })
     }
 };
 
