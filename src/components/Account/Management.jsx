@@ -8,8 +8,8 @@ class Management extends Component {
             <div className="Account-management">
                 {children}
                 <Button.Group>
-                    <Button primary>Friends</Button>
-                    <Button secondary>Account</Button>
+                    <Button primary content="Friends" />
+                    <Button secondary content="Account" />
                     <Button className="changes-pic" animated={true}>
                         <Button.Content visible>
                             <Icon size="large" name="picture" />
