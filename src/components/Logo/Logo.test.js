@@ -12,11 +12,24 @@ describe('Component: Logo', () => {
         expect(component).toMatchSnapshot();
     });
 
-    test('renders HTML img element', () => {
-        expect(component.type).toBe('img');
-    });
+    describe('Link', () => {
+        test('get the renders link image', () => {
+            expect(component.type).toBe('a');
+        });
 
-    test('get prop logo', () => {
-        expect(component.props.src).toBe('logo.svg');
+        test('get the link of image', () => {
+            expect(component.props.href).toBe('/');
+        });
+
+        describe('Image', () => {
+            const image = component.children[0];
+            test('get the renders logo image', () => {
+                expect(image.type).toBe('img');
+            });
+
+            test('get the image', () => {
+                expect(image.props.src).toBe('logo.svg');
+            });
+        });
     });
 });

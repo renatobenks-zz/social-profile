@@ -47,8 +47,13 @@ describe('Component: Banner', () => {
     });
 
     describe('Banner disable', () => {
-        test('disable banner with component non-active', () => {
+        beforeEach(() => {
+            jest.useFakeTimers();
             Welcome.children[1].props.onClick({preventDefault: () => true});
+            jest.runAllTimers();
+        });
+
+        test('disable banner with component non-active', () => {
             component = BannerComponent.toJSON();
             expect(component).toMatchSnapshot();
             let componentClass = component.props.className.split(' ');
@@ -60,9 +65,6 @@ describe('Component: Banner', () => {
         });
 
         test('put banner above header with relative position', () => {
-            jest.useFakeTimers();
-            Welcome.children[1].props.onClick({preventDefault: () => true});
-            jest.runAllTimers();
             component = BannerComponent.toJSON();
             expect(component.props.style).toEqual({
                 position: 'relative'

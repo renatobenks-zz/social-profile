@@ -72,20 +72,17 @@ if (isDeveloping) {
     });
 }
 
+server.use('/public', express.static(path.join(
+    __dirname.split('server')[0],
+    'public'
+)));
+
 const renderPage = (assets) => {
     return `<!doctype html>
     <html lang="en">
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style type="text/css">
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: sans-serif;
-                    background: #d6d6d6;
-                }
-            </style>
             ${assets.vendor.css ? `<link rel="stylesheet" href="${assets.vendor.css}"/>` : ''}
             ${assets.bundle.css ? `<link rel="stylesheet" href="${assets.bundle.css}"/>` : ''}
             <!--
@@ -114,9 +111,9 @@ const renderPage = (assets) => {
             -->
             <script>
                 window.INITIAL_STATE = {
-                    title: 'CodeRockr social-profiles.Welcome! Just enjoy'
+                    title: 'CodeRockr social-profiles',
+                    subtitle: 'Welcome! Just enjoy'
                 };
-
                 window.DEVELOPMENT = ${isDeveloping}
             </script>
             <script src="${assets.vendor.js}"></script>

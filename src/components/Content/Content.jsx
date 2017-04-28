@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
+import { Grid } from 'semantic-ui-react'
 
 class Content extends Component {
+    static Row = Grid.Row;
+    static Column = Grid.Column;
     render () {
-        const { children } = this.props;
         return (
-            <div className='App-content'>
-                { children }
+            <div className="App-content">
+                <Grid {...this.props}>
+                    {this.props.children}
+                </Grid>
             </div>
         )
     }

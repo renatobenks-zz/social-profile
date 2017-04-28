@@ -1,10 +1,19 @@
-import React from 'react';
-import ReactRender from 'react-test-renderer';
+import React from 'react'
+import ReactRender from 'react-test-renderer'
 
-import Title from './Title.jsx';
-const TitleComponent = ReactRender.create(
-    <Title title="My app title"/>
+import Title from './Title.jsx'
+
+const propsTitle = {
+    title: 'My app title'
+};
+
+const createComponent = (props={}, content='') => ReactRender.create(
+    <Title {...props}>
+        {content}
+    </Title>
 );
+
+const TitleComponent = createComponent(propsTitle);
 const component = TitleComponent.toJSON();
 
 describe('Component: Title', () => {
@@ -12,45 +21,26 @@ describe('Component: Title', () => {
         expect(component).toMatchSnapshot();
     });
 
-    test('component should renders title', () => {
-        expect(component.children.length).toBe(1);
-        expect(component.type).toBe('div');
+    test('renders on component the title with additional icon', () => {
+        expect(createComponent({...propsTitle, icon: 'browser'}))
+            .toMatchSnapshot();
     });
 
-    test('get title prop on component', () => {
-        const title = component.children[0];
-        expect(title.type).toBe('h1');
-        expect(title.children).toEqual(
-            expect.arrayContaining(['My app title'])
-        );
+    test('renders on component a additional icon', () => {
+        expect(createComponent({icon: 'browser'})).toMatchSnapshot();
     });
 
-    describe('Title within subtitle', () => {
-        const TitleComponent = ReactRender.create(
-            <Title title="My title.My subtitle"/>
-        );
-        const component = TitleComponent.toJSON();
+    test('renders title with subtitle', () => {
+        expect(createComponent({...propsTitle, subtitle: 'My subtitle'}))
+            .toMatchSnapshot();
+    });
 
-        test('renders title with subtitle', () => {
-            expect(component).toMatchSnapshot();
-            expect(component.children.length).toBe(2);
-        });
+    test('renders content children in', () => {
+        expect(createComponent({}, <img src="logo.svg" alt="logo"/>))
+            .toMatchSnapshot();
+    });
 
-        test('get title component', () => {
-            const title = component.children[0];
-            expect(title.type).toBe('h1');
-            expect(title.children).toEqual(
-                expect.arrayContaining(['My title'])
-            );
-        });
-
-        test('get subtitle component', () => {
-            const subtitle = component.children[1];
-            expect(subtitle.type).toBe('h2');
-            expect(subtitle.children).toEqual(
-                expect.arrayContaining(['My subtitle'])
-            );
-
-        });
+    test('no renders content missing content, title and subtitle', () => {
+        expect(createComponent()).toMatchSnapshot();
     });
 });

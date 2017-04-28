@@ -1,7 +1,30 @@
 .App-content {
-  width: 75%;
-  padding: 4rem 0;
+  width: 100%;
+  padding: 1rem;
   margin:0 auto;
   font-size: large;
   text-align: left;
+  .ui.grid .row {
+    padding: 0;
+    > div.column {
+      padding: 1rem;
+    }
+  }
+  .App-content-left {
+    background: transparent;
+    padding: 0;
+    > div {
+      margin: 2rem 0;
+      &:first-of-type {
+        margin-top: 0;
+      }
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+    .App-friends {
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+  }
 }

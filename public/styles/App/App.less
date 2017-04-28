@@ -1,3 +1,37 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #d6d6d6;
+}
+
 .App {
-    text-align: center;
+  text-align: center;
+}
+
+.ui.grid {
+  margin: 0;
+}
+
+a {
+  color: #ec9d21;
+  -webkit-transition: all 0.3s 0.15s;
+  -moz-transition: all 0.3s 0.15s;
+  -ms-transition: all 0.3s 0.15s;
+  -o-transition: all 0.3s 0.15s;
+  transition: all 0.3s 0.15s;
+  &:hover {
+    color: black;
+  }
+}
+
+.ui.primary.button {
+  background: #ec9d21;
+  color: white;
+  &:hover {
+    background: rgba(236, 157, 33, 0.9);
+  }
+  &:focus {
+    background: #ec9d21;
+  }
 }

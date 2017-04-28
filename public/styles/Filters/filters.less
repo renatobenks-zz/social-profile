@@ -11,11 +11,16 @@
     font-size: 2rem;
   }
   .Filters {
-    width: 50%;
+    height: auto;
+    min-width: 50%;
+    max-width: 100%;
     margin: 1rem 0;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-around;
+    .ui.search {
+      margin: 0 1rem;
+    }
     .Filters-button {
       font-family: 'Amatic SC', cursive;
       font-size: 2rem;
@@ -24,6 +29,16 @@
       color: black;
       border: none;
       border-radius: 500rem;
+      -webkit-transition: all 0.1s;
+      -moz-transition: all 0.1s;
+      -ms-transition: all 0.1s;
+      -o-transition: all 0.1s;
+      transition: all 0.1s;
+      cursor: pointer;
+      &:disabled {
+        cursor: default;
+        background: rgba(255, 255, 255, .4);
+      }
     }
   }
 }

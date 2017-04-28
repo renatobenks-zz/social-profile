@@ -1,0 +1,36 @@
+.Account-management {
+  ul {
+    list-style: none;
+    padding: 1rem 0 0;
+    margin: 0;
+    li {
+      padding: 0 0 1rem;
+    }
+  }
+  > .ui.buttons {
+    .ui.button.changes-pic {
+      width: auto;
+      height: auto;
+      background: transparent;
+      border: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      padding: 0 1rem;
+      &:hover, &:focus {
+        background: transparent;
+      }
+      .content {
+        margin: 0;
+        &.hidden {
+          top: 25%;
+          width: inherit;
+        }
+        img, i {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

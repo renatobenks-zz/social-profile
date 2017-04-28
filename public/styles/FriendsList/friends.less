@@ -1,0 +1,34 @@
+.App-friends {
+  padding: 0;
+  -webkit-border-radius: .28571429rem;
+  -moz-border-radius: .28571429rem;
+  border-radius: .28571429rem;
+  .ui.grid {
+    > .row {
+      padding: 0 0 1rem 0;
+      .ui.card {
+        .content {
+          font-size: 1rem;
+          .header {
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-flow: row wrap;
+            justify-content: space-between;
+            .icons {
+              flex-grow: 1;
+              display: flex;
+              flex-flow: row wrap;
+              justify-content: space-between;
+              i.icon {
+                margin: 0 5px;
+              }
+            }
+          }
+        }
+      }
+      &:last-of-type {
+        padding-bottom: 0;
+      }
+    }
+  }
+}

@@ -1,38 +1,30 @@
 import React, { Component } from 'react';
+import { Icon } from 'semantic-ui-react'
 
 class Title extends Component {
-    constructor (props) {
-        super(props);
-        this.state = {
-            title: props.title
-        };
-    }
-
-    componentWillMount () {
-        const text = this.state.title.split('.');
-        if (text.length === 2) {
-            this.setState({
-                title: text[0],
-                subtitle: text[1]
-            });
-        }
-    }
-
     render () {
-        let title = [
-            <h1 key="title">{this.state.title}</h1>
-        ];
-
-        if (this.state.subtitle)
-            title.push(
-                <h2 key="subtitle" className="App-subtitle">
-                    {this.state.subtitle}
-                </h2>
+        const { title, subtitle, children, icon } = this.props;
+        const content = [];
+        if (title)
+            content.push(
+                <h1 key="title">
+                    {icon ? <Icon key="icon" name={icon} /> : ''}
+                    {title}
+                </h1>
             );
 
+        if (subtitle) {
+            content.push(
+                <h2 key="subtitle" className="subtitle">
+                    {subtitle}
+                </h2>
+            );
+        }
+
+        content.splice(0, 0, children);
         return (
             <div className="App-title">
-                {title}
+                {content}
             </div>
         );
     }
