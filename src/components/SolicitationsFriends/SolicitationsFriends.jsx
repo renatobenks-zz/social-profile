@@ -29,11 +29,6 @@ class SolicitationsFriends extends Component {
         this.props.onApproveFriend({...friend[0]});
     }
 
-    //TODO: action callback to decline
-    onDeclineSolicitation (friend) {
-        console.log(this.state.friends[friends.indexOf(friend)]);
-    }
-
     render () {
         const { friends } = this.state;
         if (!Array.isArray(friends) || friends.length < 1) {
