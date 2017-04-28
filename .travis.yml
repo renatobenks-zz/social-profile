@@ -15,3 +15,10 @@ cache:
     - node_modules
 after_script:
   - codecov
+  - npm run build
+
+deploy:
+  provider: heroku
+  api_key:
+    secure: c069a093-19c7-42c6-84da-eeddb4a61d16
+  app: code-rockr-app
