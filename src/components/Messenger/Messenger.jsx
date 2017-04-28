@@ -6,23 +6,28 @@ class Messenger extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            friends: props.friends
+            friends: []
         };
 
         this.onUpdateFriendStatus = this.onUpdateFriendStatus.bind(this);
     }
 
     componentWillMount () {
+        const { friends } = this.props;
         this.setState({
-            friends: this.state.friends.map(friend => ({
+            friends: friends.map(friend => ({
                 ...friend,
-                online: false
+                online: !!friend.online
             }))
         });
     }
 
     componentDidMount () {
         this.interval = setInterval(this.onUpdateFriendStatus, 60000);
+    }
+
+    componentWillReceiveProps () {
+        this.componentWillMount();
     }
 
     componentWillUnmount () {

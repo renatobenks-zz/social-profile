@@ -12,19 +12,24 @@ class Banner extends Component {
         this.onCloseMessage = this.onCloseMessage.bind(this);
     }
 
-    onCloseMessage (e) {
-        e.preventDefault();
-        setTimeout(() =>
+    onCloseMessage (event) {
+        event.preventDefault();
+        this.closeMessageTimeoutActive = setTimeout(() => {
             this.setState({
                 active: false
-            }), 150);
+            });
 
-        setTimeout(() => {
+            clearTimeout(this.closeMessageTimeoutActive);
+        }, 150);
+
+        this.closeMessageTimeoutPosition = setTimeout(() => {
             this.setState({
                 style: {
                     position: 'relative'
                 }
             });
+
+            clearTimeout(this.closeMessageTimeoutPosition);
         }, 1450);
     }
 

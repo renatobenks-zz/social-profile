@@ -75,4 +75,33 @@ describe('Component: App', () => {
             expect(FiltersButton.props.disabled).toBe(true);
         });
     });
+
+    describe('onAddFriend', () => {
+        const getContent = component =>
+            component.children[3].children[0]
+                .children[0].children[0].children[0];
+
+        const getAccountContent = component => {
+            const content = getContent(component);
+            return content.children[0].children[1]
+        };
+
+        beforeEach(() => {
+            let accountContent = getAccountContent(component);
+            const buttons = accountContent.children[1];
+            const openSolicitations = buttons.children[1];
+            openSolicitations.props.onClick(eventMock);
+            accountContent = getAccountContent(AppComponent.toJSON());
+            const solicitations = accountContent.children[0];
+            const solicitation = solicitations.children[0];
+            const extra = solicitation.children[1];
+            const actions = extra.children[0];
+            const approve = actions.children[0];
+            approve.props.onClick(eventMock);
+        });
+
+        test('renders the new friend added after pending friendship solicitation', () => {
+            expect(AppComponent.toJSON()).toMatchSnapshot();
+        });
+    });
 });

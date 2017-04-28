@@ -42,6 +42,7 @@ class Account extends Component {
         this.onBackHome = this.onBackHome.bind(this);
 
         this.onUpdateContent = this.onUpdateContent.bind(this);
+        this.onApproveFriend = this.onApproveFriend.bind(this);
     }
 
     componentWillMount () {
@@ -76,11 +77,10 @@ class Account extends Component {
     openSolicitationsFriends (event) {
         event.stopPropagation();
         this._open('solicitations', (
-            <div className="solicitations">
-                <SolicitationsFriends
-                    friends={this.state.solicitations.friends}
-                />
-            </div>
+            <SolicitationsFriends
+                onApproveFriend={this.onApproveFriend}
+                friends={this.state.solicitations.friends}
+            />
         ));
     }
 
@@ -111,6 +111,10 @@ class Account extends Component {
             this.setState({
                 content
             });
+    }
+
+    onApproveFriend (friend) {
+        this.props.onAddFriend(friend);
     }
 
     render () {

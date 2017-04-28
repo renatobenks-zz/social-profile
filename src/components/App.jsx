@@ -27,11 +27,24 @@ class App extends Component {
         };
 
         this.disableFilters = this.disableFilters.bind(this);
+        this.onAddFriend = this.onAddFriend.bind(this);
     }
 
     disableFilters (filtersDisabled) {
         this.setState({
             filtersDisabled
+        });
+    }
+
+    onAddFriend (friend) {
+        const { user } = this.state;
+        const { friends } = user;
+        friends.push(friend);
+        this.setState({
+            user: {
+                ...user,
+                friends
+            }
         });
     }
 
@@ -64,7 +77,10 @@ class App extends Component {
                     <Content.Row>
                         <Content.Column width="4">
                             <div className="App-content-left">
-                                <Account user={user} />
+                                <Account
+                                    onAddFriend={this.onAddFriend}
+                                    user={user}
+                                />
                                 <FriendsList friends={friends} />
                             </div>
                         </Content.Column>
