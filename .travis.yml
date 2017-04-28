@@ -14,11 +14,12 @@ cache:
   directories:
     - node_modules
 
+script:
+  - npm run build
+
 deploy:
   skip_cleanup: true
   provider: heroku
-  run:
-    - "npm run build"
   api_key:
     secure: c069a093-19c7-42c6-84da-eeddb4a61d16
   app: code-rockr-app
