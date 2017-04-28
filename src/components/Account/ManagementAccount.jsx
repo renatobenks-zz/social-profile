@@ -6,9 +6,7 @@ class ManagementAccount extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            password: props.password || false,
-            configure: props.configure || false,
-            content: []
+            password: props.password || false
         };
 
         this.onChangeContent = this.onChangeContent.bind(this);
@@ -25,10 +23,7 @@ class ManagementAccount extends Component {
         );
 
         this.setState({
-            content: [
-                ...this.state.content,
-                ...content
-            ]
+            content
         });
     }
 
@@ -54,6 +49,7 @@ class ManagementAccount extends Component {
                             <Button primary content="Friends" />
                             <Button secondary content="Account" />
                             <Button
+                                title="Changes pic"
                                 className="changes-pic"
                                 animated={true}
                                 >
