@@ -16,6 +16,7 @@ class SolicitationsFriends extends Component {
     _onClick (event, {as}, index) {
         event.preventDefault();
         if (as) this.onApproveSolicitation(this._onApprove(index));
+        else this._onApprove(index);
     }
 
     _onApprove (index) {
