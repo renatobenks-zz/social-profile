@@ -3,6 +3,7 @@ import ReactRender from 'react-test-renderer'
 
 import { eventMock, window } from './__mocks__/components';
 
+global.window = window;
 const propsApp = {
     banner: 'banner.png',
     logo: 'logo.svg',

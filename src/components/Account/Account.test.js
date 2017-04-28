@@ -1,21 +1,23 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
+import shallow from 'react-test-renderer/shallow'
 
-import { mockFriends, eventMock } from '../__mocks__/components'
+import { mockFriends, eventMock, window } from '../__mocks__/components'
+import ManagementAccount from './ManagementAccount.jsx'
 import Account from './Account.jsx'
+
+global.window = window;
 const user = {
     ...mockFriends[0],
     name: 'renato',
     friends: mockFriends
 };
 
-const createComponent = (content='') => ReactRender.create(
-    <Account user={user}>
-        {content}
-    </Account>
+const createComponent = (props={}) => ReactRender.create(
+    <Account {...props} />
 );
 
-const AccountComponent = createComponent();
+const AccountComponent = createComponent({user});
 const component = AccountComponent.toJSON();
 const header = component.children[0];
 const content = component.children[1];
@@ -24,11 +26,7 @@ const buttons = content.children[1];
 describe('Component: Account', () => {
     test('renders without crash', () => {
         expect(component).toMatchSnapshot();
-    });
-
-    test('renders component with content children', () => {
-        expect(createComponent(<p>Hello world</p>)).toMatchSnapshot();
-    });
+     });
 
     test('renders the popup opened with account configurations', () => {
         const icon = header.children[1];
@@ -78,17 +76,28 @@ describe('Component: Account', () => {
         });
     });
 
-    describe('Management', () => {
-        test('renders management without crash', () => {
-            expect(createComponent(<Account.Management/>)).toMatchSnapshot();
+    describe('onUpdateContent', () => {
+        const AccountComponent = new Account({user});
+        const setStateMock = jest.fn(AccountComponent.setState);
+        const mockOnUpdateContent = jest.fn(AccountComponent.onUpdateContent);
+        const ManagementAccountComponent = new ManagementAccount({
+            onUpdateContent: mockOnUpdateContent
         });
 
-        test('renders management with content children', () => {
-            expect(createComponent(
-                <Account.Management>
-                    <p>Hello world</p>
-                </Account.Management>
-            )).toMatchSnapshot();
+        const content = <p>Hello world</p>;
+        beforeEach(() => {
+            ManagementAccountComponent.onChangeContent(content);
+        });
+
+        test('should update content in account from click into management account', () => {
+            expect(mockOnUpdateContent).toHaveBeenCalledWith(content);
+        });
+
+        test('should not update with content in account from click into management', () => {
+            mockOnUpdateContent.mockClear();
+            ManagementAccountComponent.onChangeContent();
+            expect(mockOnUpdateContent).toHaveBeenCalledWith(undefined);
+            expect(setStateMock).not.toHaveBeenCalled();
         });
     });
 });

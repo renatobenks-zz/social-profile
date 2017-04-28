@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Icon, Popup, Button, Image } from 'semantic-ui-react'
+import { Button, Image, Icon } from 'semantic-ui-react'
 
 import FriendPopup from '../FriendPopup/FriendPopup.jsx'
-import Management from './Management.jsx'
+import ManagementAccount from './ManagementAccount.jsx'
 import SolicitationsFriends from '../SolicitationsFriends/SolicitationsFriends.jsx'
 class Account extends Component {
     constructor (props) {
@@ -29,10 +29,7 @@ class Account extends Component {
             default: (
                 <div className="image user">
                     <FriendPopup friend={props.user}>
-                        <img
-                            className="ui image circular"
-                            src={props.user.image}
-                        />
+                        <Image shape="circular" src={props.user.image}/>
                     </FriendPopup>
                 </div>
             )
@@ -43,9 +40,10 @@ class Account extends Component {
         this.openNotifications = this.openNotifications.bind(this);
         this.openSolicitationsFriends = this.openSolicitationsFriends.bind(this);
         this.onBackHome = this.onBackHome.bind(this);
+
+        this.onUpdateContent = this.onUpdateContent.bind(this);
     }
 
-    static Management = Management;
     componentWillMount () {
         this.setState({
             content: this.state.default
@@ -72,10 +70,7 @@ class Account extends Component {
         const { active } = item;
         if (active) return this.onBackHome();
         this._active(item, origin);
-        this.setState({
-            user: {...this.state.user, active: false},
-            content
-        });
+        this.setState({content});
     }
 
     openSolicitationsFriends (event) {
@@ -93,44 +88,47 @@ class Account extends Component {
         event.stopPropagation();
         this._open('notifications', (
             <div className="notifications">
+                <Icon color="grey" size="big" name="alarm" />
                 <p>No notifications, yet!</p>
             </div>
         ));
     }
 
     onBackHome () {
+        const { notifications, solicitations } = this.state;
+        notifications.active = false;
+        solicitations.active = false;
         this.setState({
             user: {...this.state.user, active: true},
-            notifications: {...this.state.notifications, active: false},
-            solicitations: {...this.state.solicitations, active: false},
+            solicitations,
+            notifications,
             content: this.state.default
         });
     }
 
+    onUpdateContent (content=null) {
+        if (content)
+            this.setState({
+                content
+            });
+    }
+
     render () {
-        const { user, children } = this.props;
-        const popupButton = <Icon fitted link name="configure"/>;
+        const { user } = this.props;
         return (
             <div className="App-account">
                 <div className="header">
                     <strong>{user.name}</strong>
-                    <Popup
-                        basic
-                        position="bottom right"
-                        on="click"
-                        trigger={popupButton}
-                        >
-                        <Popup.Header>Management account</Popup.Header>
-                        <Popup.Content>
-                            {children}
-                        </Popup.Content>
-                    </Popup>
+                    <ManagementAccount
+                        onUpdateContent={this.onUpdateContent}
+                        password
+                    />
                 </div>
                 <div className="content">
                     {this.state.content}
                     <Button.Group>
                         <Button
-                            active={this.state.user.active}
+                            color={this.state.user.active ? 'grey' : 'black'}
                             title="Back home"
                             onClick={this.onBackHome}
                             icon="home"

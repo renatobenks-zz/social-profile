@@ -64,18 +64,7 @@ class App extends Component {
                     <Content.Row>
                         <Content.Column width="4">
                             <div className="App-content-left">
-                                <Account user={user}>
-                                    <Account.Management>
-                                        <ul>
-                                            <li>
-                                                <a href="#">Configurations</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Change password</a>
-                                            </li>
-                                        </ul>
-                                    </Account.Management>
-                                </Account>
+                                <Account user={user} />
                                 <FriendsList friends={friends} />
                             </div>
                         </Content.Column>
