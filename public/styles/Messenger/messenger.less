@@ -1,0 +1,44 @@
+.App-messenger {
+  width: 100%;
+  height: auto;
+  padding: 0;
+  position: relative;
+  background: white;
+  color: white;
+  -webkit-border-radius: 0.25rem;
+  -moz-border-radius: 0.25rem;
+  border-radius: 0.25rem;
+  .ui.cards {
+    margin: 0;
+    -webkit-border-radius: inherit;
+    -moz-border-radius: inherit;
+    border-radius: inherit;
+    .ui.card {
+      padding: 0.5rem 0;
+      margin: 0;
+      background: white;
+      -webkit-border-radius: inherit;
+      -moz-border-radius: inherit;
+      border-radius: inherit;
+      .content .header {
+        font-size: 1rem;
+        color: black;
+        font-family: 'Montserrat', sans-serif;
+        img.image.avatar {
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+        i.icon {
+          margin: 5px 0;
+          float: right;
+        }
+      }
+      &:hover {
+        background: #ec9d21;
+        .content .header {
+          color: white;
+        }
+      }
+    }
+  }
+}

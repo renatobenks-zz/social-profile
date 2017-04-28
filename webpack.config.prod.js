@@ -14,7 +14,9 @@ module.exports = {
         ],
         vendor: [
             "react",
-            "react-dom"
+            "react-dom",
+            "animate.css/animate.min.css",
+            "semantic-ui-css/semantic.min.css"
         ]
     },
     output: {
@@ -78,7 +80,7 @@ module.exports = {
                 })
             },
             {
-                test: /\.(svg|png|woff|woff2|jpg|gif)$/,
+                test: /\.(svg|png|woff|woff2|jpg|gif|ttf|eot)$/,
                 use: "url-loader"
             }
         ]

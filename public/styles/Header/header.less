@@ -1,0 +1,24 @@
+.App-header {
+  display: flex;
+  flex-flow: row wrap;
+  flex-grow: 2;
+  background-color: #222;
+  padding: 4rem;
+  margin: 0;
+  color: white;
+  > div {
+    padding: 0 1rem;
+    &:nth-child(odd) {
+      border-right: 1px solid white;
+    }
+  }
+
+  .App-title {
+    h1 {
+      font-size: 2.5rem;
+    }
+    .App-subtitle {
+      font-size: 2rem;
+    }
+  }
+}

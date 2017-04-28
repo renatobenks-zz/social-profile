@@ -65,12 +65,24 @@ if (isDeveloping) {
     }));
 } else {
     server.use(morgan('combined'));
-    server.use('/build/public', express.static(webpack_production.output.path));
+    server.use('/build/public',
+        express.static(webpack_production.output.path)
+    );
+
     fs.readFile('assets.json', 'utf-8', (err, data) => {
         if (err) throw err;
         assets = JSON.parse(data);
     });
 }
+
+server.use('/public',
+    express.static(
+        path.join(
+            __dirname.split('server')[0],
+            'public'
+        )
+    )
+);
 
 const renderPage = (assets) => {
     return `<!doctype html>
@@ -78,13 +90,6 @@ const renderPage = (assets) => {
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <style type="text/css">
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: sans-serif;
-                }
-            </style>
             ${assets.vendor.css ? `<link rel="stylesheet" href="${assets.vendor.css}"/>` : ''}
             ${assets.bundle.css ? `<link rel="stylesheet" href="${assets.bundle.css}"/>` : ''}
             <!--
@@ -112,7 +117,10 @@ const renderPage = (assets) => {
               To run app into production, use 'npm run production'.
             -->
             <script>
-                window.INITIAL_STATE = {title: 'Hello from React app!'};
+                window.INITIAL_STATE = {
+                    title: 'CodeRockr social-profiles',
+                    subtitle: 'Welcome! Just enjoy'
+                };
                 window.DEVELOPMENT = ${isDeveloping}
             </script>
             <script src="${assets.vendor.js}"></script>

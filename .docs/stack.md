@@ -54,3 +54,28 @@ seja habilitado no server do Express.
 
 [Codecov](https://codecov.io/gh)
 ---
+
+[Semantic UI](https://semantic-ui.com/)
+---
+
+Podemos dizer que o Semantic UI é 
+framework css, ou um *style guide* 
+para que você possa montar os 
+componentes da sua aplicação facilmente,
+usando estilos pré definidos como base
+para que você montar seus próprios.
+
+Umas das maiores vantagens da utilização
+do Semantic UI é que ele auxilia e bastante
+a manter o conceito de *mobile first* 
+da sua aplicação através da `grid` de
+16 colunas que ele te proporciona.
+
+### semantic-ui-react
+
+Através do Semantic UI você pode usar 
+uma integração que o semantic te 
+proporciona para usa-lo em aplicações 
+React.
+
+*Veja mais sobre [aqui](https://semantic-ui.com/)*
