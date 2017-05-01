@@ -7,24 +7,22 @@ export const fetch = (url, params) => {
         process.nextTick(() => {
             switch (path) {
                 case 'friends':
-                    resolve({
-                        json: () => ({
-                            ...friends,
-                            data: friends.data
-                                .map(friend => ({
-                                    id: friend.id*10,
-                                    name: friend.user === 'Desconhecido'
-                                        ? '' : friend.user,
-                                    avatar: friend.image === 'desconhecido.png'
-                                        ? '' : friend.image
-                                }))
-                        })
+                    const data = params.method === 'GET'
+                        ? {...friends, data: friends.data.map(friend => ({
+                            id: Math.ceil(friend.id*10.5),
+                            name: friend.user === 'Desconhecido'
+                                ? '' : friend.user,
+                            avatar: friend.image === 'desconhecido.png'
+                                ? '' : friend.image
+                        }))}
+                        : {status: 'OK', data: params.body};
+                    return resolve({
+                        json: () => (data)
                     });
                     break;
-                default:
-                    reject(console.error('endpoint not found'));
-                    break;
             }
+
+            return reject('endpoint not found');
         });
     });
 };
