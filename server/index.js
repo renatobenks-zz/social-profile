@@ -8,14 +8,14 @@ import helmet from 'helmet'
 import hpp from 'hpp'
 import morgan from 'morgan'
 import compression from 'compression'
+// fetch with node
+import fetch from 'node-fetch'
 
 import webpack from 'webpack'
 import webpackMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpack_config from '../webpack.config.dev'
 import webpack_production from '../webpack.config.prod'
-
-import FETCH_REQUEST  from '../middlewares/callAPImiddleware'
 
 let assets;
 const isDeveloping = process.env.NODE_ENV === 'development';
@@ -119,9 +119,17 @@ const renderPage = (assets, data={}) => {
 };
 
 server.get('*', (req, res) => {
-    FETCH_REQUEST('friends?pageSize=20&pageNumber=1')
+    fetch('https://api.backand.com/1/objects/friends?pageSize=20&pageNumber=1', {
+        headers: {
+            'Content-Type': 'application/json',
+            'AnonymousToken': '7e507e02-3eaf-401d-b3a9-a33e823d632f'
+        }
+    })
+        .then(data => data.json())
         .then(data => {
-            res.status(200).send(renderPage(assets, {friends: data}));
+            res.status(200).send(renderPage(assets, {
+                friends: {...data, pageSize: 20, pageNumber: 1}
+            }));
         });
 });
 
