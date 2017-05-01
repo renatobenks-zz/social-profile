@@ -16,3 +16,8 @@ export const ENDPOINTS = {
         }
     }
 };
+
+export const HEADERS = {
+    'Content-Type': 'application/json',
+    'AnonymousToken': '7e507e02-3eaf-401d-b3a9-a33e823d632f'
+};
