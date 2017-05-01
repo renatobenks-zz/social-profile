@@ -10,7 +10,7 @@ global.window = window;
 const user = {
     ...mockFriends[0],
     name: 'renato',
-    friends: mockFriends
+    friends: window.INITIAL_STATE.friends
 };
 
 const createComponent = (props={}) => ReactRender.create(
