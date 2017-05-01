@@ -7,9 +7,10 @@ const propsStatusList = {
 };
 
 import StatusList from './StatusList.jsx'
-const component = ReactRender.create(
-    <StatusList {...propsStatusList} />
+const createComponent = props => ReactRender.create(
+    <StatusList {...props} />
 );
+const component = createComponent(propsStatusList);
 
 describe('Component: StatusList', () => {
     test('renders without crash', () => {
@@ -17,6 +18,14 @@ describe('Component: StatusList', () => {
     });
 
     test('defines user like desconhecido when not found or not defined in fetch data', () => {
+        const props = {
+            ...propsStatusList,
+            content: {
+                ...propsStatusList.content,
+                status: [...mockStatus, {id: 10, user: '', text: 'any'}],
+            }
+        };
 
+        expect(createComponent(props)).toMatchSnapshot();
     });
 });

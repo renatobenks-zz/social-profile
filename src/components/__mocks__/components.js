@@ -2,8 +2,7 @@ export const mockStatus = [
     { id: 1, user: 'Elton', text: 'nothing interesting' },
     { id: 2, user: 'Elton', text: 'status updated' },
     { id: 3, user: 'Elton', text: 'my status' },
-    { id: 4, user: 'Vinicius', text: 'other status' },
-    { id: 5, user: '', text: 'text' }
+    { id: 4, user: 'Vinicius', text: 'other status' }
 ];
 
 export const mockFriends = [
