@@ -15,4 +15,8 @@ describe('Component: StatusList', () => {
     test('renders without crash', () => {
         expect(component).toMatchSnapshot();
     });
+
+    test('defines user like desconhecido when not found or not defined in fetch data', () => {
+
+    });
 });
