@@ -9,7 +9,7 @@ class SocialFeed extends Component {
         return (
             <div className="App-social">
                 <BreadcrumbRoute default />
-                <Title title="Status | timeline" icon="browser"/>
+                <h1><Icon name="browser" /> Status | timeline</h1>
                 <hr/>
                 {children}
                 <p>
