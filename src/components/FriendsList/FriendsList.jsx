@@ -28,6 +28,23 @@ class FriendsList extends Component {
         this.onFavorite = this.onFavorite.bind(this);
     }
 
+    static getRandomDate () {
+        return new Date(+(new Date()) - Math.floor(Math.random()*10000000000));
+    }
+
+    static filterFavoritesFriends ({friends}) {
+        return friends.filter(friend => friend.favorite)
+    }
+
+    static filterFriendsWithLimit ({friends, limit}) {
+        return friends.filter((friend, index) => index < limit);
+    }
+
+    static _get () {
+        ENDPOINTS.FRIENDS.params.pageNumber++;
+        return FETCH_REQUEST(ENDPOINTS.FRIENDS.get_endpoint());
+    }
+
     componentWillMount () {
         let { friends, favoritesOnly } = this.state;
         if (favoritesOnly)
@@ -48,23 +65,6 @@ class FriendsList extends Component {
                 limit
             })
         });
-    }
-
-    static getRandomDate () {
-        return new Date(+(new Date()) - Math.floor(Math.random()*10000000000));
-    }
-
-    static filterFavoritesFriends ({friends}) {
-        return friends.filter(friend => friend.favorite)
-    }
-
-    static filterFriendsWithLimit ({friends, limit}) {
-        return friends.filter((friend, index) => index < limit);
-    }
-
-    static _get () {
-        ENDPOINTS.FRIENDS.params.pageNumber++;
-        return FETCH_REQUEST(ENDPOINTS.FRIENDS.get_endpoint());
     }
 
     async getMoreFriends () {
