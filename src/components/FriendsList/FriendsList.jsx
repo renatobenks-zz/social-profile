@@ -25,6 +25,7 @@ class FriendsList extends Component {
         this._activeButton = this._activeButton.bind(this);
         this.getMoreFriends = this.getMoreFriends.bind(this);
         this.showMoreFriends = this.showMoreFriends.bind(this);
+        this.onFavorite = this.onFavorite.bind(this);
     }
 
     static getRandomDate () {
@@ -134,6 +135,17 @@ class FriendsList extends Component {
         }, 1500);
     }
 
+    onFavorite (event, id) {
+        event.preventDefault();
+        this.setState({
+            friends: this.state.friends.map(friend => {
+                if (friend.id === id)
+                    friend = {...friend, favorite: !friend.favorite};
+                return friend;
+            })
+        });
+    }
+
     render () {
         const { friends, showMore } = this.state;
         return (
@@ -162,6 +174,8 @@ class FriendsList extends Component {
                                                     ? 'active' : null}
                                                 name={friend.favorite
                                                     ? 'star' : 'empty star'}
+                                                onClick={(event) =>
+                                                    this.onFavorite(event, friend.id)}
                                             />
                                         </div>
                                         <Friend.Content.Description>

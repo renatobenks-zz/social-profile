@@ -119,4 +119,22 @@ describe('Component: FriendsList', () => {
             jest.clearAllTimers();
         });
     });
+
+    describe('onFavorite', () => {
+        const getFriend = (component, id=1) =>
+            component.children[0].children[id].children[0];
+        const getIcons = (component, id) => getFriend(component, id)
+            .children[1].children[0].children[1];
+        test('renders a favorites friend when click to favorite friend', () => {
+            const favorite = getIcons(component).children[1];
+            favorite.props.onClick(eventMock);
+            expect(FriendsListComponent.toJSON()).toMatchSnapshot();
+        });
+
+        test('renders a friend not favorites when click to favorite a favorite friend', () => {
+            const favorite = getIcons(component, 0).children[1];
+            favorite.props.onClick(eventMock);
+            expect(FriendsListComponent.toJSON()).toMatchSnapshot();
+        });
+    });
 });
