@@ -77,6 +77,7 @@ describe('Component: App', () => {
     });
 
     describe('onAddFriend', () => {
+        jest.useFakeTimers();
         const getContent = component =>
             component.children[3].children[0]
                 .children[0].children[0].children[0];
@@ -98,10 +99,15 @@ describe('Component: App', () => {
             const actions = extra.children[0];
             const approve = actions.children[0];
             approve.props.onClick(eventMock);
+            jest.runAllTimers();
         });
 
         test('renders the new friend added after pending friendship solicitation', () => {
             expect(AppComponent.toJSON()).toMatchSnapshot();
+        });
+
+        afterEach(() => {
+            jest.clearAllTimers();
         });
     });
 });

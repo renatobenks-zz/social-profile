@@ -22,7 +22,17 @@ class App extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            user: props.user,
+            user: {
+                ...props.user,
+                friends: {
+                    ...props.friends,
+                    data: props.friends.data.map(friend => ({
+                        ...friend,
+                        user: friend.name || friend.user || 'Desconhecido',
+                        image: friend.avatar || friend.image || '/public/images/02.avatar.png'
+                    }))
+                }
+            },
             filtersDisabled: true
         };
 
@@ -37,14 +47,9 @@ class App extends Component {
     }
 
     onAddFriend (friend) {
-        const { user } = this.state;
-        const { friends } = user;
-        friends.push(friend);
-        this.setState({
-            user: {
-                ...user,
-                friends
-            }
+        this.setState(({user}) => {
+            user.friends.data.push({...friend});
+            return {user};
         });
     }
 
@@ -53,11 +58,11 @@ class App extends Component {
         const { user, filtersDisabled } = this.state;
         const { friends, feed } = user;
         const { status } = feed;
-        const content = {status, friends};
+        const content = {status, friends: friends.data};
         return (
             <div className="App">
                 <Banner banner={banner} />
-                <SearchApp status={status} friends={friends} />
+                <SearchApp status={status} friends={friends.data} />
                 <Header>
                     <Company logo={logo}>
                         <Title title={title} subtitle={subtitle} />
@@ -90,7 +95,7 @@ class App extends Component {
                             </SocialFeed>
                         </Content.Column>
                         <Content.Column width="4">
-                            <Messenger friends={friends} />
+                            <Messenger friends={friends.data} />
                         </Content.Column>
                     </Content.Row>
                 </Content>

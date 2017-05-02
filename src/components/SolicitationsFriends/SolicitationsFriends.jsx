@@ -5,7 +5,9 @@ class SolicitationsFriends extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            friends: props.friends
+            friends: props.friends,
+            activeApprove: false,
+            activeDecline: false
         };
 
         this._onClick = this._onClick.bind(this);
@@ -15,18 +17,27 @@ class SolicitationsFriends extends Component {
 
     _onClick (event, {as}, index) {
         event.preventDefault();
-        if (as) this.onApproveSolicitation(this._onApprove(index));
+        if (as) setTimeout(() => {
+            this.onApproveSolicitation(this._onApprove(index));
+        }, 1500);
+        else this._onApprove(index);
     }
 
     _onApprove (index) {
         const { friends } = this.state;
-        let friend = friends.splice(index, 1);
-        this.setState({friends});
+        const friend = friends.splice(index, 1);
+        this.setState({
+            friends
+        });
+
         return {...friend};
     }
 
     onApproveSolicitation (friend) {
         this.props.onApproveFriend({...friend[0]});
+        this.setState({
+            activeApprove: !this.state.activeApprove
+        });
     }
 
     render () {
@@ -48,8 +59,9 @@ class SolicitationsFriends extends Component {
                         <Card style={{textAlign: 'left'}} key={friend.id}>
                             <Card.Content>
                                 <Button
-                                    floated="right"
+                                    compact
                                     inverted
+                                    floated="right"
                                     animated={true}
                                     >
                                     <Button.Content visible>
@@ -62,7 +74,7 @@ class SolicitationsFriends extends Component {
                                     <Button.Content hidden>
                                         <Icon
                                             link
-                                            name="user add"
+                                            name="empty star"
                                         />
                                     </Button.Content>
                                 </Button>
@@ -72,6 +84,7 @@ class SolicitationsFriends extends Component {
                                 <Card.Meta>
                                     {friend.online ? 'Online': 'Offline'}
                                     <Icon
+                                        size="small"
                                         color={friend.online
                                             ? 'green' : 'grey'}
                                         name="circle"
@@ -82,9 +95,11 @@ class SolicitationsFriends extends Component {
                                 </Card.Description>
                             </Card.Content>
                             <Card.Content extra>
-                                <Button.Group fluid>
+                                <Button.Group>
                                     <Button
                                         basic
+                                        toggle
+                                        active={this.state.activeApprove}
                                         color="green"
                                         icon="checkmark"
                                         content="Approve"
@@ -94,6 +109,8 @@ class SolicitationsFriends extends Component {
                                     />
                                     <Button
                                         basic
+                                        toggle
+                                        active={this.state.activeDecline}
                                         color="red"
                                         icon="minus"
                                         content="Decline"
