@@ -152,7 +152,11 @@ class FriendsList extends Component {
                                     />
                                     <Friend.Content friend={friend}>
                                         <div className="icons">
-                                            <Icon color="grey" name="circle" />
+                                            <Icon
+                                                color={friend.online
+                                                    ? 'green' : 'grey'}
+                                                name="circle"
+                                            />
                                             <Icon
                                                 className={friend.favorite
                                                     ? 'active' : null}
