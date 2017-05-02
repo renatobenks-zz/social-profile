@@ -56,7 +56,10 @@ class SolicitationsFriends extends Component {
                 {friends.map((friend, i) => {
                     friend.user = friend.user ? friend.user : 'Desconhecido';
                     return (
-                        <Card style={{textAlign: 'left'}} key={friend.id}>
+                        <Card
+                            style={{textAlign: 'left'}}
+                            key={friend.id}
+                            >
                             <Card.Content>
                                 <Button
                                     compact
@@ -97,7 +100,6 @@ class SolicitationsFriends extends Component {
                             <Card.Content extra>
                                 <Button.Group>
                                     <Button
-                                        basic
                                         toggle
                                         active={this.state.activeApprove}
                                         color="green"
@@ -108,7 +110,6 @@ class SolicitationsFriends extends Component {
                                             this._onClick(e,props,i)}
                                     />
                                     <Button
-                                        basic
                                         toggle
                                         active={this.state.activeDecline}
                                         color="red"

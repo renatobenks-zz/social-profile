@@ -13,7 +13,8 @@ class Account extends Component {
                 ...props.user
             },
             notifications: {
-                active: false
+                active: false,
+                alerts: []
             },
             solicitations: {
                 active: false,
@@ -133,26 +134,31 @@ class Account extends Component {
                     {this.state.content}
                     <Button.Group>
                         <Button
-                            color={user.active ? 'grey' : 'black'}
+                            basic
+                            color={user.active ? 'black' : 'grey'}
+                            icon="home"
                             title="Back home"
                             onClick={this.onBackHome}
-                            icon="home"
                         />
                         <Button
+                            basic
                             color="green"
-                            active={solicitations.active}
                             title="Open friends solicitations"
+                            active={solicitations.active}
                             icon={solicitations.active
                                     ? 'group' : 'add user'}
+                            content={solicitations.friends.length}
                             onClick={this.openSolicitationsFriends}
                         />
                         <Button
+                            basic
                             color="blue"
                             active={notifications.active}
                             title="Open notifications"
-                            onClick={this.openNotifications}
                             icon={notifications.active
-                                    ? 'alarm' : 'alarm outline'}
+                                ? 'alarm' : 'alarm outline'}
+                            content={notifications.alerts.length}
+                            onClick={this.openNotifications}
                             />
                     </Button.Group>
                 </div>
