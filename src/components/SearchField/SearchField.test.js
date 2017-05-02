@@ -307,6 +307,18 @@ describe('Component: SearchField', () => {
                 input.props.onChange(event);
                 expect(SearchFieldComponent.toJSON()).toMatchSnapshot();
             });
+
+            test('renders max results aleatory when the results its bigger or equal than double max results', () => {
+                event.target.value = 'status';
+                SearchFieldComponent = createComponent({
+                    ...props,
+                    maxResults: 8
+                });
+                component = SearchFieldComponent.toJSON();
+                input = component.children[0].children[0];
+                input.props.onChange(event);
+                expect(SearchFieldComponent.toJSON()).toMatchSnapshot();
+            });
         });
     });
 

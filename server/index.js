@@ -1,20 +1,23 @@
-import fs from 'fs';
-import path from 'path';
-import express from 'express';
-import favicon from 'serve-favicon';
-import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
-import helmet from 'helmet';
-import hpp from 'hpp';
-import morgan from 'morgan';
-import compression from 'compression';
+import fs from 'fs'
+import path from 'path'
+import express from 'express'
+import favicon from 'serve-favicon'
+import bodyParser from 'body-parser'
+import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
+import hpp from 'hpp'
+import morgan from 'morgan'
+import compression from 'compression'
+// fetch with node
+import fetch from 'node-fetch'
 
-import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import webpack_config from '../webpack.config.dev';
-import webpack_production from '../webpack.config.prod';
+import webpack from 'webpack'
+import webpackMiddleware from 'webpack-dev-middleware'
+import webpackHotMiddleware from 'webpack-hot-middleware'
+import webpack_config from '../webpack.config.dev'
+import webpack_production from '../webpack.config.prod'
 
+let assets;
 const isDeveloping = process.env.NODE_ENV === 'development';
 const port = process.env.PORT || 8000;
 const server = express();
@@ -32,19 +35,15 @@ server.use(helmet.noSniff());
 server.use(cookieParser());
 server.use(compression());
 
-server.use(favicon(
-    path.join(__dirname.split('server')[0],
-        'public',
-        'favicon.ico'
-    )
-));
-let assets;
+server.use(favicon(path.join(__dirname.split('server')[0],'public','favicon.ico')));
+
 if (isDeveloping) {
     const compiler = webpack(webpack_config);
     assets = {
         vendor: {js: '/build/public/vendor.js'},
         bundle: {js: '/build/public/bundle.js'}
     };
+
     server.use(morgan('dev'));
     server.use(webpackMiddleware(compiler, {
         publicPath: webpack_config.output.publicPath,
@@ -72,12 +71,8 @@ if (isDeveloping) {
     });
 }
 
-server.use('/public', express.static(path.join(
-    __dirname.split('server')[0],
-    'public'
-)));
-
-const renderPage = (assets) => {
+server.use('/public', express.static(path.join(__dirname.split('server')[0], 'public')));
+const renderPage = (assets, data={}) => {
     return `<!doctype html>
     <html lang="en">
         <head>
@@ -110,10 +105,11 @@ const renderPage = (assets) => {
               To run app into production, use 'npm run production'.
             -->
             <script>
-                window.INITIAL_STATE = {
+                window.INITIAL_STATE = ${JSON.stringify({
                     title: 'CodeRockr social-profiles',
-                    subtitle: 'Welcome! Just enjoy'
-                };
+                    subtitle: 'Welcome! Just enjoy',
+                    ...data
+                })}
                 window.DEVELOPMENT = ${isDeveloping}
             </script>
             <script src="${assets.vendor.js}"></script>
@@ -123,7 +119,18 @@ const renderPage = (assets) => {
 };
 
 server.get('*', (req, res) => {
-    res.status(200).send(renderPage(assets));
+    fetch('https://api.backand.com/1/objects/friends?pageSize=20&pageNumber=1', {
+        headers: {
+            'Content-Type': 'application/json',
+            'AnonymousToken': '7e507e02-3eaf-401d-b3a9-a33e823d632f'
+        }
+    })
+        .then(data => data.json())
+        .then(data => {
+            res.status(200).send(renderPage(assets, {
+                friends: {...data, pageSize: 20, pageNumber: 1}
+            }));
+        });
 });
 
 server.listen(port, '0.0.0.0', (err) => {

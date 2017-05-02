@@ -6,7 +6,7 @@ class Messenger extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            friends: []
+            friends: props.friends
         };
 
         this.onUpdateFriendStatus = this.onUpdateFriendStatus.bind(this);
@@ -35,9 +35,9 @@ class Messenger extends Component {
     }
 
     onUpdateFriendStatus () {
-        const friends = this.state.friends;
+        const { friends } = this.state;
         const friend = friends
-            [Math.floor(Math.random()*((this.state.friends.length-1)+1))];
+            [Math.floor(Math.random()*((friends.length-1)+1))];
         friend.online = !friend.online;
 
         this.setState({

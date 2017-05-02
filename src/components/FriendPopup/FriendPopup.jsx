@@ -12,11 +12,11 @@ class FriendPopup extends Component {
                 >
                 <Popup.Content>
                     <Friend>
-                        <Image src={friend.image}/>
+                        <Image centered size="small" src={friend.image}/>
                         <Friend.Content friend={friend}>
                             {friend.favorite
-                                ? <Icon className="active" name="star" /> : ''
-                            }
+                                ? <Icon className="active" name="star" />
+                                : null}
                             <Friend.Content.Description>
                                 {friend.user} biography
                             </Friend.Content.Description>

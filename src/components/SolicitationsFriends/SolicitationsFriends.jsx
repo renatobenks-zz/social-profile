@@ -5,7 +5,9 @@ class SolicitationsFriends extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            friends: props.friends
+            friends: props.friends,
+            activeApprove: false,
+            activeDecline: false
         };
 
         this._onClick = this._onClick.bind(this);
@@ -15,22 +17,35 @@ class SolicitationsFriends extends Component {
 
     _onClick (event, {as}, index) {
         event.preventDefault();
-        if (as) this.onApproveSolicitation(this._onApprove(index));
+        if (as === 'Approve') {
+            setTimeout(() => this.onApproveSolicitation(index), 1000);
+            this.setState({
+                activeApprove: true
+            });
+        } else this._onApprove(index);
     }
 
     _onApprove (index) {
         const { friends } = this.state;
-        let friend = friends.splice(index, 1);
-        this.setState({friends});
+        const friend = friends.splice(index, 1);
+        this.setState({
+            friends
+        });
+
         return {...friend};
     }
 
-    onApproveSolicitation (friend) {
+    onApproveSolicitation (index) {
+        const friend = this._onApprove(index);
         this.props.onApproveFriend({...friend[0]});
+        this.setState({
+            activeApprove: !this.state.activeApprove
+        });
     }
 
     render () {
-        const { friends } = this.state;
+        const { friends, activeApprove, activeDecline } = this.state;
+
         if (!Array.isArray(friends) || friends.length < 1) {
             return (
                 <div className="solicitations">
@@ -45,11 +60,17 @@ class SolicitationsFriends extends Component {
                 {friends.map((friend, i) => {
                     friend.user = friend.user ? friend.user : 'Desconhecido';
                     return (
-                        <Card style={{textAlign: 'left'}} key={friend.id}>
+                        <Card
+                            className={'animated '.concat(activeApprove
+                                ? 'rollOut' : null)}
+                            style={{textAlign: 'left'}}
+                            key={friend.id}
+                            >
                             <Card.Content>
                                 <Button
-                                    floated="right"
+                                    compact
                                     inverted
+                                    floated="right"
                                     animated={true}
                                     >
                                     <Button.Content visible>
@@ -62,7 +83,7 @@ class SolicitationsFriends extends Component {
                                     <Button.Content hidden>
                                         <Icon
                                             link
-                                            name="user add"
+                                            name="empty star"
                                         />
                                     </Button.Content>
                                 </Button>
@@ -72,6 +93,7 @@ class SolicitationsFriends extends Component {
                                 <Card.Meta>
                                     {friend.online ? 'Online': 'Offline'}
                                     <Icon
+                                        size="small"
                                         color={friend.online
                                             ? 'green' : 'grey'}
                                         name="circle"
@@ -82,22 +104,24 @@ class SolicitationsFriends extends Component {
                                 </Card.Description>
                             </Card.Content>
                             <Card.Content extra>
-                                <Button.Group fluid>
+                                <Button.Group>
                                     <Button
-                                        basic
+                                        toggle
+                                        active={activeApprove}
                                         color="green"
                                         icon="checkmark"
                                         content="Approve"
-                                        as="approve"
+                                        as="Approve"
                                         onClick={(e, props) =>
                                             this._onClick(e,props,i)}
                                     />
                                     <Button
-                                        basic
+                                        toggle
+                                        active={activeDecline}
                                         color="red"
                                         icon="minus"
                                         content="Decline"
-                                        as={null}
+                                        as="Decline"
                                         onClick={(e, props) =>
                                             this._onClick(e,props,i)}
                                     />

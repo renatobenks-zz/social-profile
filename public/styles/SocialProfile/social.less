@@ -4,17 +4,30 @@
   -webkit-border-radius: 0.25rem;
   -moz-border-radius: 0.25rem;
   border-radius: 0.25rem;
-  .App-title {
+  h1 {
     margin: 2rem 0;
-    h1 {
-      font-size: 3rem;
-    }
+    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
   }
   hr {
     margin: 0;
   }
+  > p {
+    color: grey;
+    text-align: center;
+    font-size: 12px;
+    font-style: italic;
+    .ui.button {
+      padding: 0;
+      margin: 0 1rem;
+      > .visible.content {
+        margin: 0 auto;
+      }
+    }
+  }
   .ui.feed {
-    margin: 0;
+    margin: 0 0 2rem;
     .event {
       padding: 2rem;
       border-bottom: 1px solid #666;
