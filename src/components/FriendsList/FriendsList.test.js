@@ -2,7 +2,7 @@ import React from 'react'
 import ReactRender from 'react-test-renderer'
 
 import '../__mocks__/fetch'
-import { window, eventMock } from '../__mocks__/components'
+import { window, eventMock, mockFriends } from '../__mocks__/components'
 import FriendsList from './FriendsList.jsx'
 
 const propsFriendsList = {
@@ -29,6 +29,18 @@ describe('Component: FriendsList', () => {
 
     test('renders only favorites friends into list', () => {
         const props = {...propsFriendsList, favoritesOnly: true};
+        expect(createComponent(props)).toMatchSnapshot();
+    });
+
+    test('renders online friends', () => {
+        const props = {
+            ...propsFriendsList,
+            friends: {...propsFriendsList.friends, data: [
+                    ...propsFriendsList.friends.data,
+                    {...mockFriends[0], online: true}
+            ]}
+        };
+
         expect(createComponent(props)).toMatchSnapshot();
     });
 
