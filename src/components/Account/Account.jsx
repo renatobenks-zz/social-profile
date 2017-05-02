@@ -25,6 +25,12 @@ class Account extends Component {
                         image: '/public/images/02.avatar.png',
                         favorite: true,
                         online: true
+                    }, {
+                        id: '668',
+                        user: 'Old Braga',
+                        image: '/public/images/02.avatar.png',
+                        favorite: false,
+                        online: true
                     }
                 ]
             },
