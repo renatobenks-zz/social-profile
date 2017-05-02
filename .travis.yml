@@ -15,6 +15,7 @@ cache:
     - node_modules
 
 deploy:
+  skip_cleanup: true
   provider: heroku
   api_key:
     secure: 363ee34e-cf09-4740-8802-9f67d71302ca
