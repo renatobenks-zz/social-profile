@@ -10,21 +10,28 @@ class ManagementAccount extends Component {
         };
 
         this.onChangeContent = this.onChangeContent.bind(this);
+        this.openChangePassword = this.openChangePassword.bind(this);
     }
 
     componentWillMount () {
         const { password } = this.state;
         const content = [];
         if (password) content.push(
-            <PasswordManagement
-                key="password"
-                onChangeContent={this.onChangeContent}
-            />
+            <li key="password">
+                <a href="#" onClick={this.openChangePassword}>
+                    Changes password
+                </a>
+            </li>
         );
 
         this.setState({
             content
         });
+    }
+
+    openChangePassword (event) {
+        event.preventDefault();
+        this.onChangeContent(<PasswordManagement />);
     }
 
     onChangeContent (content) {
@@ -46,8 +53,8 @@ class ManagementAccount extends Component {
                     <div className="Account-management">
                         <ul>{content}</ul>
                         <Button.Group fluid>
-                            <Button primary content="Friends" />
                             <Button secondary content="Account" />
+                            <Button primary content="Profile" />
                             <Button
                                 title="Changes pic"
                                 className="changes-pic"
