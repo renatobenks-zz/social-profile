@@ -21,6 +21,8 @@ deploy:
   api_key:
     secure: 363ee34e-cf09-4740-8802-9f67d71302ca
   app: code-rockr-app
+  on:
+    - rvm: 2.0.0
 
 after_script:
   - codecov
