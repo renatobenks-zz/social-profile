@@ -28,15 +28,15 @@ class FriendsList extends Component {
         this.onFavorite = this.onFavorite.bind(this);
     }
 
-    static getRandomDate () {
-        return new Date(+(new Date()) - Math.floor(Math.random()*10000000000));
-    }
-
     componentWillMount () {
-        const { friends, favoritesOnly } = this.state;
+        let { friends, favoritesOnly } = this.state;
+        if (favoritesOnly)
+            friends = FriendsList.filterFavoritesFriends({friends});
         this.setState({
-            friends: !favoritesOnly ? friends
-                : FriendsList.filterFavoritesFriends({friends}),
+            friends: friends.map(friend => ({
+                ...friend,
+                date: FriendsList.getRandomDate()
+            }))
         });
     }
 
@@ -48,6 +48,10 @@ class FriendsList extends Component {
                 limit
             })
         });
+    }
+
+    static getRandomDate () {
+        return new Date(+(new Date()) - Math.floor(Math.random()*10000000000));
     }
 
     static filterFavoritesFriends ({friends}) {
@@ -152,8 +156,8 @@ class FriendsList extends Component {
             <div className="App-friends">
                 <Grid>
                     {friends.map(friend => {
-                        let date = FriendsList.getRandomDate();
-                        date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+                        let date = friend.date;
+                        date = [date.getDate(), date.getMonth()+1, date.getFullYear()];
                         return (
                             <Grid.Row key={friend.id}>
                                 <Friend>
@@ -186,7 +190,7 @@ class FriendsList extends Component {
                                         </Friend.Content.Metadata>
                                     </Friend.Content>
                                     <Friend.Extra>
-                                        Last updated was in {date}
+                                        Last updated was in {date.join('/')}
                                     </Friend.Extra>
                                 </Friend>
                             </Grid.Row>
