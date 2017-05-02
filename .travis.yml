@@ -17,6 +17,7 @@ cache:
 
 before_deploy:
   - gem -v
+  - ruby --version
 
 deploy:
   skip_cleanup: true
