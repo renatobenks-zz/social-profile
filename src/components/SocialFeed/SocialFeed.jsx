@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Button, Icon } from 'semantic-ui-react'
 
 import BreadcrumbRoute from '../BreadcrumbRoute/BreadcrumbRoute.jsx'
-import Title from '../Title/Title.jsx'
 class SocialFeed extends Component {
     constructor (props) {
         super(props);
