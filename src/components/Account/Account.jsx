@@ -9,17 +9,25 @@ class Account extends Component {
         super(props);
         this.state = {
             user: {
-                active: true
+                active: true,
+                ...props.user
             },
             notifications: {
-                active: false
+                active: false,
+                alerts: []
             },
             solicitations: {
                 active: false,
                 friends: [
                     {
                         id: '667',
-                        user: '',
+                        user: 'New Braga',
+                        image: '/public/images/02.avatar.png',
+                        favorite: true,
+                        online: true
+                    }, {
+                        id: '668',
+                        user: 'Old Braga',
                         image: '/public/images/02.avatar.png',
                         favorite: false,
                         online: true
@@ -118,7 +126,7 @@ class Account extends Component {
     }
 
     render () {
-        const { user } = this.props;
+        const { user, solicitations, notifications } = this.state;
         return (
             <div className="App-account">
                 <div className="header">
@@ -132,31 +140,36 @@ class Account extends Component {
                     {this.state.content}
                     <Button.Group>
                         <Button
-                            color={this.state.user.active ? 'grey' : 'black'}
+                            basic
+                            color={user.active ? 'black' : 'grey'}
+                            icon="home"
                             title="Back home"
                             onClick={this.onBackHome}
-                            icon="home"
                         />
                         <Button
+                            basic
                             color="green"
-                            active={this.state.solicitations.active}
                             title="Open friends solicitations"
-                            icon={this.state.solicitations.active
+                            active={solicitations.active}
+                            icon={solicitations.active
                                     ? 'group' : 'add user'}
+                            content={solicitations.friends.length}
                             onClick={this.openSolicitationsFriends}
                         />
                         <Button
+                            basic
                             color="blue"
-                            active={this.state.notifications.active}
+                            active={notifications.active}
                             title="Open notifications"
+                            icon={notifications.active
+                                ? 'alarm' : 'alarm outline'}
+                            content={notifications.alerts.length}
                             onClick={this.openNotifications}
-                            icon={this.state.notifications.active
-                                    ? 'alarm' : 'alarm outline'}
                             />
                     </Button.Group>
                 </div>
                 <div className="info">
-                    <span>You have {user.friends.length} friends</span>
+                    <span>You have {user.friends.data.length} friends</span>
                 </div>
             </div>
         );

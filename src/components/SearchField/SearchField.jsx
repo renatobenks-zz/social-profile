@@ -59,6 +59,7 @@ class SearchField extends Component {
     }
 
     onSearch (event, value) {
+        const { maxResults } = this.state;
         // special characters
         if (/[~`!#$%\^&*+=\-\[\]\\';,/{}|\\":<>\?]/g.test(value))
             return this.setState({value: ''});
@@ -67,14 +68,11 @@ class SearchField extends Component {
                 item.title.toLowerCase()
                     .search(value.toLowerCase()) !== -1);
 
-        if (results.length > this.state.maxResults) {
-            let index = 0;
-            if (results.length >= this.state.maxResults*2)
-                index = Math.floor(Math.random()*((results.length-1)+1));
+        if (results.length > maxResults) {
             results = results.splice(
-                index,
-                this.state.maxResults
-            )
+                results.length >= maxResults*2
+                    ? Math.floor(Math.random()*((results.length-1)+1)) : 0,
+                maxResults);
         }
 
         this.setState({

@@ -4,6 +4,7 @@ import ReactRender from 'react-test-renderer'
 import { mockFriends, eventMock } from '../__mocks__/components'
 import SolicitationsFriends from './SolicitationsFriends.jsx'
 
+jest.useFakeTimers();
 const mockOnApproveFriend = jest.fn((friend) => ({friend}));
 const propsSolicitationsFriends = {
     friends: [...mockFriends],
@@ -30,6 +31,20 @@ describe('Component: SolicitationsFriends', () => {
         expect(createComponent()).toMatchSnapshot();
     });
 
+    describe('onApproveSolicitation', () => {
+        const approve = actions.children[0];
+        beforeEach(() => {
+            mockOnApproveFriend.mockClear();
+            approve.props.onClick(eventMock);
+            jest.runAllTimers();
+        });
+
+        test('renders the approve of friend from friendship pending solicitations', () => {
+            expect(mockOnApproveFriend).toHaveBeenCalledWith(mockFriends[0]);
+            expect(SolicitationsFriendsComponent.toJSON()).toMatchSnapshot();
+        });
+    });
+
     describe('onDeclineSolicitations', () => {
         const decline = actions.children[1];
         beforeEach(() => {
@@ -38,19 +53,6 @@ describe('Component: SolicitationsFriends', () => {
 
         test('renders the pending friend solicitation declined', () => {
             expect(SolicitationsFriendsComponent.toJSON()).toMatchSnapshot()
-        });
-    });
-
-    describe('onApproveSolicitations', () => {
-        const approve = actions.children[0];
-        beforeEach(() => {
-            mockOnApproveFriend.mockClear();
-            approve.props.onClick(eventMock);
-        });
-
-        test('renders the approve of friend from friendship pending solicitations', () => {
-            expect(mockOnApproveFriend).toHaveBeenCalledWith(mockFriends[0]);
-            expect(SolicitationsFriendsComponent.toJSON()).toMatchSnapshot();
         });
     });
 });

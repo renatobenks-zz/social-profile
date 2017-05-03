@@ -16,51 +16,20 @@ const user = {
         status: [
             { id: 1, user: 'Elton', text: 'nothing interesting' },
             { id: 2, user: 'Elton', text: 'status updated' },
-            { id: 3, user: 'Vinicius', text: 'my status' },
-            { id: 4, user: 'Vinicius', text: 'my other status' },
-            { id: 5, user: 'Vinicius', text: 'other status' },
+            { id: 3, user: 'Vinicius Dacal', text: 'my status' },
+            { id: 4, user: 'Vinicius Dacal', text: 'my other status' },
+            { id: 5, user: 'Vinicius Dacal', text: 'other status' },
             { id: 6, user: 'Elton', text: 'nothing interesting' },
             { id: 7, user: 'Elton', text: 'status updated' },
-            { id: 8, user: 'Vinicius', text: 'my status' },
-            { id: 9, user: 'Vinicius', text: 'my other status' },
+            { id: 8, user: 'Vinicius Dacal', text: 'my status' },
+            { id: 9, user: 'Vinicius Dacal', text: 'my other status' },
             { id: 10, user: 'Elton', text: 'nothing interesting' },
             { id: 11, user: 'Elton', text: 'status updated' },
-            { id: 12, user: 'Vinicius', text: 'my status' },
-            { id: 13, user: 'Vinicius', text: 'my other status' }
+            { id: 12, user: 'Vinicius Dacal', text: 'my status' },
+            { id: 13, user: 'Vinicius Dacal', text: 'my other status' },
+            { id: 14, user: '', text: 'my other status' }
         ]
-    },
-    friends: [
-        {
-            id: 2,
-            user: 'Elton',
-            image: '/public/images/01.avatar.jpg',
-            favorite: true
-        },
-        {
-            id: 3,
-            user: 'Vinicius',
-            image: '/public/images/01.avatar.jpg',
-            favorite: true
-        },
-        {
-            id: 4,
-            user: 'Cozinheira',
-            image: '/public/images/01.avatar.jpg',
-            favorite: true
-        },
-        {
-            id: 5,
-            user: '',
-            image: '/public/images/01.avatar.jpg',
-            favorite: true
-        },
-        {
-            id: 6,
-            user: '',
-            image: '/public/images/01.avatar.jpg',
-            favorite: false
-        }
-    ],
+    }
 };
 
 window.INITIAL_STATE = {...window.INITIAL_STATE, user};
@@ -78,7 +47,6 @@ const render = (Container) => {
 };
 
 render(App);
-
 if (module.hot) {
     module.hot.accept('./components/App.jsx', () => {
         const App = require('./components/App.jsx').default;

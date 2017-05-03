@@ -8,7 +8,10 @@ export const mockStatus = [
 export const mockFriends = [
     { id: 1, user: 'Elton', image: 'elton.png', favorite: true },
     { id: 2, user: 'Vinicius', image: 'vinicius.png', favorite: false },
-    { id: 3, user: '', image: 'desconhecido.png', favorite: false }
+    { id: 3, user: 'Desconhecido', image: 'desconhecido.png', favorite: false },
+    { id: 4, user: 'Desconhecido', image: 'desconhecido.png', favorite: false },
+    { id: 5, user: 'Desconhecido', image: 'desconhecido.png', favorite: true },
+    { id: 6, user: '', image: '', favorite: false }
 ];
 
 export const eventMock = {
@@ -31,9 +34,14 @@ export const window = {
     INITIAL_STATE: {
         title: 'My title app',
         subtitle: 'My monster subtitle',
+        friends: {
+            totalRows: mockFriends.length,
+            pageNumber: Math.ceil(mockFriends.length/20),
+            pageSize: 20,
+            data: mockFriends
+        },
         user: {
             name: 'renato',
-            friends: mockFriends,
             feed: {status: mockStatus},
             image: 'user.png'
         }

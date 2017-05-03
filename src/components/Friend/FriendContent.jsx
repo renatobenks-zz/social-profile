@@ -10,7 +10,6 @@ class FriendContent extends Component {
 
     render () {
         const { children, messenger, friend, popup } = this.props;
-        friend.user = friend.user ? friend.user : 'Desconhecido';
         let content;
         let HeaderContent = children;
         if (!messenger) {
