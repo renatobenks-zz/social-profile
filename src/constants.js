@@ -14,6 +14,9 @@ export const ENDPOINTS = {
                 key.concat('=', this.params[key])
             ).join('&');
         }
+    },
+    STATUS: {
+        endpoint: 'status'
     }
 };
 

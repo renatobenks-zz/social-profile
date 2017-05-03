@@ -44,5 +44,11 @@ describe('Constants', () => {
                 });
             });
         });
+    });
+
+    describe('STATUS', () => {
+        test('get the initial endpoint to get list of status', () => {
+            expect(ENDPOINTS.FRIENDS.endpoint).toBe('status');
+        });
     })
 });
