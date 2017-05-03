@@ -16,8 +16,7 @@ cache:
     - node_modules
 
 before_deploy:
-  - gem -v
-  - ruby --version
+  - rvm --version
 
 deploy:
   skip_cleanup: true
