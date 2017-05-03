@@ -58,7 +58,6 @@ class App extends Component {
         const { user, filtersDisabled } = this.state;
         const { friends, feed } = user;
         const { status } = feed;
-        const content = {status, friends: friends.data};
         return (
             <div className="App">
                 <Banner banner={banner} />
@@ -91,7 +90,7 @@ class App extends Component {
                         </Content.Column>
                         <Content.Column width="8">
                             <SocialFeed>
-                                <StatusList content={content}/>
+                                <StatusList users={friends.data} />
                             </SocialFeed>
                         </Content.Column>
                         <Content.Column width="4">
