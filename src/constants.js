@@ -5,18 +5,31 @@ export const ENDPOINTS = {
         params: {
             pageNumber: 1,
             pageSize: 20
-        },
-        get_endpoint () {
-            return this.endpoint.concat('?', this.get_params());
-        },
-        get_params () {
-            return Object.keys(this.params).map(key =>
-                key.concat('=', this.params[key])
-            ).join('&');
         }
     },
     STATUS: {
-        endpoint: 'status'
+        endpoint: 'status',
+        params: {
+            pageNumber: 1,
+            pageSize: 20
+        }
+    },
+    get_endpoint (OBJECT) {
+        return OBJECT.endpoint.concat('?', this.get_params(OBJECT));
+    },
+    get_params ({params}) {
+        return Object.keys(params).map(key =>
+            key.concat('=', params[key])
+        ).join('&');
+    },
+    set_page_number (OBJECT, pageNumber) {
+        return {
+            ...OBJECT,
+            params: {
+                ...OBJECT.params,
+                pageNumber
+            }
+        };
     }
 };
 
