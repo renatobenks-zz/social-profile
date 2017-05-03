@@ -9,27 +9,32 @@ const createComponent = props => ReactRender.create(
     <Messenger {...props} />
 );
 
-const component = createComponent(propsMessenger);
+const MessengerComponent = createComponent(propsMessenger);
+let component = MessengerComponent.toJSON();
 
 describe('Component: Messenger', () => {
     test('renders without crash', () => {
         expect(component).toMatchSnapshot();
     });
 
-    test('renders status like online of a random friend', () => {
+    describe('onUpdateFriendStatus', () => {
         jest.useFakeTimers();
-        const component = createComponent(propsMessenger);
-        jest.runOnlyPendingTimers();
-        expect(component).toMatchSnapshot();
-        jest.clearAllTimers();
-    });
+        beforeEach(() => {
+            component = createComponent(propsMessenger);
+            jest.runOnlyPendingTimers();
+        });
 
-    test('clear the interval when the component was unmounted', () => {
-        jest.useFakeTimers();
-        const component = createComponent(propsMessenger);
-        jest.runOnlyPendingTimers();
-        component.unmount();
-        expect(clearInterval).toHaveBeenCalled();
-        jest.clearAllTimers();
+        test('renders status like online of a random friend', () => {
+            expect(component.toJSON()).toMatchSnapshot();
+        });
+
+        test('clear the interval when the component was unmounted', () => {
+            component.unmount();
+            expect(clearInterval).toHaveBeenCalled();
+        });
+
+        afterEach(() => {
+            jest.clearAllTimers();
+        });
     });
 });
