@@ -42,7 +42,7 @@ class FriendsList extends Component {
 
     static _get () {
         ENDPOINTS.FRIENDS.params.pageNumber++;
-        return FETCH_REQUEST(ENDPOINTS.FRIENDS.get_endpoint());
+        return FETCH_REQUEST(ENDPOINTS.get_endpoint(ENDPOINTS.FRIENDS));
     }
 
     componentWillMount () {
