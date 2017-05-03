@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
+import './__mocks__/index'
 import { eventMock, window } from './__mocks__/components'
 
-global.window = window;
 const propsApp = {
     banner: 'banner.png',
     logo: 'logo.svg',
