@@ -47,12 +47,14 @@ class FriendsList extends Component {
 
     componentWillMount () {
         let { friends, favoritesOnly } = this.state;
+        const date = FriendsList.getRandomDate();
         if (favoritesOnly)
             friends = FriendsList.filterFavoritesFriends({friends});
         this.setState({
             friends: friends.map(friend => ({
                 ...friend,
-                date: FriendsList.getRandomDate()
+                date: [date.getDate(), date.getMonth()+1, date.getFullYear()]
+                    .join('/')
             }))
         });
     }
@@ -141,11 +143,11 @@ class FriendsList extends Component {
 
     onFavorite (event, id) {
         event.preventDefault();
+        const { friends } = this.state;
         this.setState({
-            friends: this.state.friends.map(friend => {
-                if (friend.id === id)
-                    friend = {...friend, favorite: !friend.favorite};
-                return friend;
+            friends: friends.map(friend => {
+                return friend.id === id
+                    ? {...friend, favorite: !friend.favorite} : friend;
             })
         });
     }
@@ -156,8 +158,6 @@ class FriendsList extends Component {
             <div className="App-friends">
                 <Grid>
                     {friends.map(friend => {
-                        let date = friend.date;
-                        date = [date.getDate(), date.getMonth()+1, date.getFullYear()];
                         return (
                             <Grid.Row key={friend.id}>
                                 <Friend>
@@ -190,7 +190,7 @@ class FriendsList extends Component {
                                         </Friend.Content.Metadata>
                                     </Friend.Content>
                                     <Friend.Extra>
-                                        Last updated was in {date.join('/')}
+                                        Last updated was in {friend.date}
                                     </Friend.Extra>
                                 </Friend>
                             </Grid.Row>
