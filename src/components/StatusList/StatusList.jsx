@@ -45,7 +45,6 @@ class StatusList extends Component {
 
     getFriendFromStatus (user) {
         const { users } = this.props;
-        if (!users) throw ('Non got it friends to sync with status users');
         const friend = users.filter(friend => friend.id === Math.abs(user, 10));
         if (friend.length <= 0 || !user)
             return {user: 'Desconhecido', image: '/public/images/02.avatar.png'};
@@ -71,20 +70,16 @@ class StatusList extends Component {
     }
 
     async updateStatusList (ENDPOINT) {
-        try {
-            return await this._get(ENDPOINT)
-                .then(status => {
-                    const data = this.getNewStatusToList(status.data);
-                    if (data.length > 0)
-                        this.setState({
-                            ...status,
-                            status: [...this.state.status, ...data]
-                        });
-                    return [...data];
-                });
-        } catch (e) {
-            console.error(e);
-        }
+        return await this._get(ENDPOINT)
+            .then(status => {
+                const data = this.getNewStatusToList(status.data);
+                if (data.length > 0)
+                    this.setState({
+                        ...status,
+                        status: [...this.state.status, ...data]
+                    });
+                return [...data];
+            });
     }
 
     async componentWillMount () {

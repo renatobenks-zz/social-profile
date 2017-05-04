@@ -21,11 +21,6 @@ describe('Component: StatusList', () => {
         expect(component).toMatchSnapshot()
     });
 
-    test('should display error in console when catch the update list status', async () => {
-        const StatusListComponent = createComponent();
-        expect(await StatusListComponent.toJSON()).toMatchSnapshot();
-    });
-
     test('renders news status received from api into list', async () => {
         const StatusListComponent = createComponent(propsStatusList);
         jest.runOnlyPendingTimers();
