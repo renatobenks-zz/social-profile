@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
-import './__mocks__/index'
+import './__mocks__'
 import { eventMock, window } from './__mocks__/components'
 
 const propsApp = {
