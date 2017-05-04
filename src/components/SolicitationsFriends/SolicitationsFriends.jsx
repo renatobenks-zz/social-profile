@@ -17,30 +17,30 @@ class SolicitationsFriends extends Component {
 
     _onClick (event, {as}, index) {
         event.preventDefault();
+        const { friends } = this.state;
         if (as === 'Approve') {
-            setTimeout(() => this.onApproveSolicitation(index), 1000);
             this.setState({
-                activeApprove: true
+                friends: friends.map((friend, i) => ({
+                    ...friend,
+                    approved: index === i
+                }))
             });
+            this.onApproveSolicitation(index);
         } else this._onApprove(index);
     }
 
     _onApprove (index) {
         const { friends } = this.state;
         const friend = friends.splice(index, 1);
-        this.setState({
-            friends
-        });
-
+        this.setState({friends});
         return {...friend};
     }
 
     onApproveSolicitation (index) {
-        const friend = this._onApprove(index);
-        this.props.onApproveFriend({...friend[0]});
-        this.setState({
-            activeApprove: !this.state.activeApprove
-        });
+        setTimeout(() => {
+            const friend = this._onApprove(index);
+            this.props.onApproveFriend({...friend[0]})
+        }, 1000);
     }
 
     render () {
@@ -61,8 +61,8 @@ class SolicitationsFriends extends Component {
                     friend.user = friend.user ? friend.user : 'Desconhecido';
                     return (
                         <Card
-                            className={'animated '.concat(activeApprove
-                                ? 'rollOut' : null)}
+                            className={'animated '.concat(
+                                friend.approved ? 'rollOut' : null)}
                             style={{textAlign: 'left'}}
                             key={friend.id}
                             >
