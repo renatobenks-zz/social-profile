@@ -23,11 +23,12 @@ class Messenger extends Component {
     }
 
     componentDidMount () {
-        this.interval = setInterval(this.onUpdateFriendStatus, 60000);
+        this.interval = setInterval(this.onUpdateFriendStatus, 30000);
     }
 
     componentWillReceiveProps () {
-        this.componentWillMount();
+        if (this.props.friends.length > this.state.friends.length)
+            this.componentWillMount();
     }
 
     componentWillUnmount () {
@@ -36,7 +37,8 @@ class Messenger extends Component {
 
     onUpdateFriendStatus () {
         const { friends } = this.state;
-        this.props.activeUsersOnline({
+
+        this.setState({
             friends: friends.map((friend, index) => ({
                 ...friend,
                 online: index === Math.floor(Math.random()*((friends.length-1)+1))

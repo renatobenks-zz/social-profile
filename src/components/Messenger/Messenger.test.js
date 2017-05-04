@@ -4,15 +4,8 @@ import ReactRender from 'react-test-renderer'
 import { mockFriends } from '../__mocks__/components'
 import Messenger from './Messenger.jsx'
 
-const mockActiveUsersOnline = jest.fn(({friends}) =>
-    createComponent({...propsMessenger, friends})
-);
-
 const propsMessenger = {
-    friends: mockFriends,
-    activeUsersOnline (state) {
-        return mockActiveUsersOnline(state);
-    }
+    friends: mockFriends
 };
 
 const createComponent = props => ReactRender.create(
@@ -34,11 +27,7 @@ describe('Component: Messenger', () => {
         });
 
         test('renders status like online of a random friend', () => {
-            const state = mockActiveUsersOnline.mock.calls[0][0];
-            const { friends } = state;
-            expect(mockActiveUsersOnline).toHaveBeenCalledWith(state);
-            expect(createComponent({...propsMessenger, friends}))
-                .toMatchSnapshot();
+            expect(MessengerComponent.toJSON()).toMatchSnapshot();
         });
 
         test('clear the interval when the component was unmounted', () => {
@@ -49,7 +38,6 @@ describe('Component: Messenger', () => {
 
         afterEach(() => {
             jest.clearAllTimers();
-            mockActiveUsersOnline.mockClear();
         });
     });
 });

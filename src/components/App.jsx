@@ -39,7 +39,6 @@ class App extends Component {
         this._onUpdate = this._onUpdate.bind(this);
         this.disableFilters = this.disableFilters.bind(this);
         this.onAddFriend = this.onAddFriend.bind(this);
-        this.activeUsersOnline = this.activeUsersOnline.bind(this);
     }
 
     _onUpdate (updates) {
@@ -56,13 +55,6 @@ class App extends Component {
         const { user } = this.state;
         user.friends.data.push({...friend});
         this._onUpdate({user});
-    }
-
-    activeUsersOnline ({friends}) {
-        const { user } = this.state;
-        this._onUpdate({
-            user: {...user, friends: {...user.friends, data: [...friends]}}
-        });
     }
 
     render () {

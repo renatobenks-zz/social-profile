@@ -110,14 +110,4 @@ describe('Component: App', () => {
             jest.clearAllTimers();
         });
     });
-
-    describe('activeUsersOnline', () => {
-        test('renders the friends with online status updated', () => {
-            jest.useFakeTimers();
-            const AppComponent = createComponent(propsApp);
-            jest.runOnlyPendingTimers();
-            expect(AppComponent.toJSON());
-            jest.clearAllTimers();
-        });
-    });
 });

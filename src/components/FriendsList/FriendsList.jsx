@@ -53,8 +53,11 @@ class FriendsList extends Component {
         this.setState({
             friends: friends.map(friend => ({
                 ...friend,
-                date: [date.getDate(), date.getMonth()+1, date.getFullYear()]
-                    .join('/')
+                date: [
+                    date.getDate(),
+                    date.getMonth()+1,
+                    date.getFullYear()
+                ].join('/')
             }))
         });
     }
@@ -62,23 +65,8 @@ class FriendsList extends Component {
     componentDidMount () {
         const { friends, limit } = this.state;
         this.setState({
-            friends: FriendsList.filterFriendsWithLimit({
-                friends,
-                limit
-            })
+            friends: FriendsList.filterFriendsWithLimit({friends, limit})
         });
-    }
-
-    componentWillReceiveProps () {
-        const { data } = this.props.friends;
-        this.setState(() => {
-            return {friends: data}
-        });
-    }
-
-    componentDidUpdate () {
-        const { friends, limit } = this.state;
-        if (friends.length > limit) this.componentDidMount();
     }
 
     async getMoreFriends () {
@@ -158,10 +146,11 @@ class FriendsList extends Component {
         event.preventDefault();
         const { friends } = this.state;
         this.setState({
-            friends: friends.map(friend => {
-                return friend.id === id
-                    ? {...friend, favorite: !friend.favorite} : friend;
-            })
+            friends: friends.map(friend => ({
+                ...friend,
+                favorite: friend.id === id
+                    ? !friend.favorite : friend.favorite
+            }))
         });
     }
 
