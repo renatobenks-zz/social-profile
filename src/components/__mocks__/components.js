@@ -1,8 +1,44 @@
 export const mockStatus = [
-    { id: 1, user: 'Elton', text: 'nothing interesting' },
-    { id: 2, user: 'Elton', text: 'status updated' },
-    { id: 3, user: 'Elton', text: 'my status' },
-    { id: 4, user: 'Vinicius', text: 'other status' }
+    {
+        id: 1,
+        user: '1',
+        text: 'nothing interesting',
+        __metadata: {
+            descriptives: {
+                user: { label: 'Elton', value: '1' }
+            }
+        }
+    },
+    {
+        id: 2,
+        user: '1',
+        text: 'status updated',
+        __metadata: {
+            descriptives: {
+                user: { label: 'Elton', value: '1' }
+            }
+        }
+    },
+    {
+        id: 3,
+        user: '1',
+        text: 'my status',
+        __metadata: {
+            descriptives: {
+                user: { label: 'Elton', value: '1' }
+            }
+        }
+    },
+    {
+        id: 4,
+        user: '2',
+        text: 'other status',
+        __metadata: {
+            descriptives: {
+                user: { label: 'Vinicius', value: '2' }
+            }
+        }
+    }
 ];
 
 export const mockFriends = [
