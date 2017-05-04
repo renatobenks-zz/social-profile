@@ -22,6 +22,7 @@ class App extends Component {
     constructor (props) {
         super(props);
         this.state = {
+            filtersDisabled: true,
             user: {
                 ...props.user,
                 friends: {
@@ -32,24 +33,35 @@ class App extends Component {
                         image: friend.avatar || friend.image || '/public/images/02.avatar.png'
                     }))
                 }
-            },
-            filtersDisabled: true
+            }
         };
 
+        this._onUpdate = this._onUpdate.bind(this);
         this.disableFilters = this.disableFilters.bind(this);
         this.onAddFriend = this.onAddFriend.bind(this);
+        this.activeUsersOnline = this.activeUsersOnline.bind(this);
     }
 
-    disableFilters (filtersDisabled) {
+    _onUpdate (updates) {
         this.setState({
-            filtersDisabled
+            ...updates
         });
     }
 
+    disableFilters (filtersDisabled) {
+        this._onUpdate({filtersDisabled});
+    }
+
     onAddFriend (friend) {
-        this.setState(({user}) => {
-            user.friends.data.push({...friend});
-            return {user};
+        const { user } = this.state;
+        user.friends.data.push({...friend});
+        this._onUpdate({user});
+    }
+
+    activeUsersOnline ({friends}) {
+        const { user } = this.state;
+        this._onUpdate({
+            user: {...user, friends: {...user.friends, data: [...friends]}}
         });
     }
 
@@ -94,7 +106,10 @@ class App extends Component {
                             </SocialFeed>
                         </Content.Column>
                         <Content.Column width="4">
-                            <Messenger friends={friends.data} />
+                            <Messenger
+                                activeUsersOnline={this.activeUsersOnline}
+                                friends={friends.data}
+                            />
                         </Content.Column>
                     </Content.Row>
                 </Content>

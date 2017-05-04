@@ -17,7 +17,7 @@ class Messenger extends Component {
         this.setState({
             friends: friends.map(friend => ({
                 ...friend,
-                online: !!friend.online
+                online: friend.online || false
             }))
         });
     }
@@ -36,12 +36,11 @@ class Messenger extends Component {
 
     onUpdateFriendStatus () {
         const { friends } = this.state;
-        const friend = friends
-            [Math.floor(Math.random()*((friends.length-1)+1))];
-        friend.online = !friend.online;
-
-        this.setState({
-            friends: [...friends]
+        this.props.activeUsersOnline({
+            friends: friends.map((friend, index) => ({
+                ...friend,
+                online: index === Math.floor(Math.random()*((friends.length-1)+1))
+            }))
         });
     }
 

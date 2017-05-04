@@ -69,6 +69,18 @@ class FriendsList extends Component {
         });
     }
 
+    componentWillReceiveProps () {
+        const { data } = this.props.friends;
+        this.setState(() => {
+            return {friends: data}
+        });
+    }
+
+    componentDidUpdate () {
+        const { friends, limit } = this.state;
+        if (friends.length > limit) this.componentDidMount();
+    }
+
     async getMoreFriends () {
         const { allIn } = this.state;
         const friendsID = this.state.friends.map(friend => friend.id);
@@ -80,12 +92,13 @@ class FriendsList extends Component {
             })
         });
 
-        if (!allIn) friends = FriendsList._get()
-            .then(friends => ({
-                ...friends,
-                pageSize: this.state.friendsNumber,
-                pageNumber: this.state.pageNumber+1
-            }));
+        if (!allIn)
+            friends = FriendsList._get()
+                .then(friends => ({
+                    ...friends,
+                    pageSize: this.state.friendsNumber,
+                    pageNumber: this.state.pageNumber+1
+                }));
 
         return await friends.then(friends => ({
             ...friends,

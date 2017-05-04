@@ -3,6 +3,7 @@ import ReactRender from 'react-test-renderer'
 
 import './__mocks__'
 import { eventMock, window } from './__mocks__/components'
+import App from './App.jsx'
 
 const propsApp = {
     banner: 'banner.png',
@@ -10,11 +11,11 @@ const propsApp = {
     ...window.INITIAL_STATE
 };
 
-import App from './App.jsx'
-const AppComponent = ReactRender.create(
-    <App {...propsApp} />
+const createComponent = (props={}) => ReactRender.create(
+    <App {...props} />
 );
 
+const AppComponent = createComponent(propsApp);
 let component = AppComponent.toJSON();
 
 describe('Component: App', () => {
@@ -48,8 +49,7 @@ describe('Component: App', () => {
 
         test('renders filters button not disabled', () => {
             input.props.onChange(eventMock);
-            const component = AppComponent.toJSON();
-            expect(component).toMatchSnapshot();
+            expect(AppComponent.toJSON()).toMatchSnapshot();
         });
 
         test('filters should be default disabled', () => {
@@ -107,6 +107,16 @@ describe('Component: App', () => {
         });
 
         afterEach(() => {
+            jest.clearAllTimers();
+        });
+    });
+
+    describe('activeUsersOnline', () => {
+        test('renders the friends with online status updated', () => {
+            jest.useFakeTimers();
+            const AppComponent = createComponent(propsApp);
+            jest.runOnlyPendingTimers();
+            expect(AppComponent.toJSON());
             jest.clearAllTimers();
         });
     });
