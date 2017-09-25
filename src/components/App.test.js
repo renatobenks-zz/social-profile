@@ -1,20 +1,21 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
+import './__mocks__'
 import { eventMock, window } from './__mocks__/components'
+import App from './App.jsx'
 
-global.window = window;
 const propsApp = {
     banner: 'banner.png',
     logo: 'logo.svg',
     ...window.INITIAL_STATE
 };
 
-import App from './App.jsx'
-const AppComponent = ReactRender.create(
-    <App {...propsApp} />
+const createComponent = (props={}) => ReactRender.create(
+    <App {...props} />
 );
 
+const AppComponent = createComponent(propsApp);
 let component = AppComponent.toJSON();
 
 describe('Component: App', () => {
@@ -48,8 +49,7 @@ describe('Component: App', () => {
 
         test('renders filters button not disabled', () => {
             input.props.onChange(eventMock);
-            const component = AppComponent.toJSON();
-            expect(component).toMatchSnapshot();
+            expect(AppComponent.toJSON()).toMatchSnapshot();
         });
 
         test('filters should be default disabled', () => {

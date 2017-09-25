@@ -42,17 +42,22 @@ class FriendsList extends Component {
 
     static _get () {
         ENDPOINTS.FRIENDS.params.pageNumber++;
-        return FETCH_REQUEST(ENDPOINTS.FRIENDS.get_endpoint());
+        return FETCH_REQUEST(ENDPOINTS.get_endpoint(ENDPOINTS.FRIENDS));
     }
 
     componentWillMount () {
         let { friends, favoritesOnly } = this.state;
+        const date = FriendsList.getRandomDate();
         if (favoritesOnly)
             friends = FriendsList.filterFavoritesFriends({friends});
         this.setState({
             friends: friends.map(friend => ({
                 ...friend,
-                date: FriendsList.getRandomDate()
+                date: [
+                    date.getDate(),
+                    date.getMonth()+1,
+                    date.getFullYear()
+                ].join('/')
             }))
         });
     }
@@ -60,10 +65,7 @@ class FriendsList extends Component {
     componentDidMount () {
         const { friends, limit } = this.state;
         this.setState({
-            friends: FriendsList.filterFriendsWithLimit({
-                friends,
-                limit
-            })
+            friends: FriendsList.filterFriendsWithLimit({friends, limit})
         });
     }
 
@@ -78,12 +80,13 @@ class FriendsList extends Component {
             })
         });
 
-        if (!allIn) friends = FriendsList._get()
-            .then(friends => ({
-                ...friends,
-                pageSize: this.state.friendsNumber,
-                pageNumber: this.state.pageNumber+1
-            }));
+        if (!allIn)
+            friends = FriendsList._get()
+                .then(friends => ({
+                    ...friends,
+                    pageSize: this.state.friendsNumber,
+                    pageNumber: this.state.pageNumber+1
+                }));
 
         return await friends.then(friends => ({
             ...friends,
@@ -141,12 +144,13 @@ class FriendsList extends Component {
 
     onFavorite (event, id) {
         event.preventDefault();
+        const { friends } = this.state;
         this.setState({
-            friends: this.state.friends.map(friend => {
-                if (friend.id === id)
-                    friend = {...friend, favorite: !friend.favorite};
-                return friend;
-            })
+            friends: friends.map(friend => ({
+                ...friend,
+                favorite: friend.id === id
+                    ? !friend.favorite : friend.favorite
+            }))
         });
     }
 
@@ -156,8 +160,6 @@ class FriendsList extends Component {
             <div className="App-friends">
                 <Grid>
                     {friends.map(friend => {
-                        let date = friend.date;
-                        date = [date.getDate(), date.getMonth()+1, date.getFullYear()];
                         return (
                             <Grid.Row key={friend.id}>
                                 <Friend>
@@ -190,7 +192,7 @@ class FriendsList extends Component {
                                         </Friend.Content.Metadata>
                                     </Friend.Content>
                                     <Friend.Extra>
-                                        Last updated was in {date.join('/')}
+                                        Last updated was in {friend.date}
                                     </Friend.Extra>
                                 </Friend>
                             </Grid.Row>

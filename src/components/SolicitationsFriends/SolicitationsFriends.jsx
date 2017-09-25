@@ -5,47 +5,58 @@ class SolicitationsFriends extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            friends: props.friends,
-            activeApprove: false,
-            activeDecline: false
+            friends: props.friends
         };
 
+        this._removes = this._removes.bind(this);
         this._onClick = this._onClick.bind(this);
         this._onApprove= this._onApprove.bind(this);
+        this._onDecline = this._onDecline.bind(this);
         this.onApproveSolicitation = this.onApproveSolicitation.bind(this);
     }
 
-    _onClick (event, {as}, index) {
-        event.preventDefault();
-        if (as === 'Approve') {
-            setTimeout(() => this.onApproveSolicitation(index), 1000);
-            this.setState({
-                activeApprove: true
-            });
-        } else this._onApprove(index);
-    }
-
-    _onApprove (index) {
+    _removes (index) {
         const { friends } = this.state;
         const friend = friends.splice(index, 1);
-        this.setState({
-            friends
-        });
-
+        setTimeout(() => {
+            this.setState({friends});
+        }, 1000);
         return {...friend};
     }
 
-    onApproveSolicitation (index) {
-        const friend = this._onApprove(index);
-        this.props.onApproveFriend({...friend[0]});
+    _onClick (event, index, callBack) {
+        event.preventDefault();
+        const { friends } = this.state;
+        callBack(index, friends);
+    }
+
+    _onApprove (index, friends) {
         this.setState({
-            activeApprove: !this.state.activeApprove
+            friends: friends.map((friend, i) =>
+                index === i ? {...friend, approved: true } : friend
+            )
         });
+
+        this.onApproveSolicitation(this._removes(index));
+    }
+
+    _onDecline (index, friends) {
+        this.setState({
+            friends: friends.map((friend, i) =>
+                index === i ? {...friend, declined: true } : friend
+            )
+        });
+
+        this._removes(index);
+    }
+
+    onApproveSolicitation (friend) {
+        delete friend[0].approved;
+        this.props.onApproveFriend({...friend[0]});
     }
 
     render () {
-        const { friends, activeApprove, activeDecline } = this.state;
-
+        const { friends } = this.state;
         if (!Array.isArray(friends) || friends.length < 1) {
             return (
                 <div className="solicitations">
@@ -61,8 +72,9 @@ class SolicitationsFriends extends Component {
                     friend.user = friend.user ? friend.user : 'Desconhecido';
                     return (
                         <Card
-                            className={'animated '.concat(activeApprove
-                                ? 'rollOut' : null)}
+                            className={'animated '.concat(friend.approved
+                                ? 'rollOut' : friend.declined
+                                    ? 'bounceOutLeft' : null)}
                             style={{textAlign: 'left'}}
                             key={friend.id}
                             >
@@ -107,23 +119,29 @@ class SolicitationsFriends extends Component {
                                 <Button.Group>
                                     <Button
                                         toggle
-                                        active={activeApprove}
+                                        active={friend.approved || false}
                                         color="green"
                                         icon="checkmark"
                                         content="Approve"
                                         as="Approve"
-                                        onClick={(e, props) =>
-                                            this._onClick(e,props,i)}
+                                        onClick={(e) =>
+                                            this._onClick(
+                                                e,
+                                                i,
+                                                this._onApprove)}
                                     />
                                     <Button
                                         toggle
-                                        active={activeDecline}
+                                        active={friend.declined || false}
                                         color="red"
                                         icon="minus"
                                         content="Decline"
                                         as="Decline"
-                                        onClick={(e, props) =>
-                                            this._onClick(e,props,i)}
+                                        onClick={(e) =>
+                                            this._onClick(
+                                                e,
+                                                i,
+                                                this._onDecline)}
                                     />
                                 </Button.Group>
                             </Card.Content>

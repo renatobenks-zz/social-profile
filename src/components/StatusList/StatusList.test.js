@@ -1,31 +1,40 @@
 import React from 'react'
 import ReactRender from 'react-test-renderer'
 
-import { mockStatus, mockFriends } from '../__mocks__/components'
+import '../__mocks__/fetch'
+import { mockFriends } from '../__mocks__/components'
+import StatusList from './StatusList.jsx'
+
 const propsStatusList = {
-    content: {status: mockStatus, friends: mockFriends}
+    users: mockFriends
 };
 
-import StatusList from './StatusList.jsx'
-const createComponent = props => ReactRender.create(
+const createComponent = (props={}) => ReactRender.create(
     <StatusList {...props} />
 );
-const component = createComponent(propsStatusList);
 
+const StatusListComponent = createComponent(propsStatusList);
 describe('Component: StatusList', () => {
-    test('renders without crash', () => {
-        expect(component).toMatchSnapshot();
+    jest.useFakeTimers();
+    test('renders without crash', async () => {
+        const component = await StatusListComponent.toJSON();
+        expect(component).toMatchSnapshot()
     });
 
-    test('defines user like desconhecido when not found or not defined in fetch data', () => {
-        const props = {
-            ...propsStatusList,
-            content: {
-                ...propsStatusList.content,
-                status: [...mockStatus, {id: 10, user: '', text: 'any'}],
-            }
-        };
+    test('renders news status received from api into list', async () => {
+        const StatusListComponent = createComponent(propsStatusList);
+        jest.runOnlyPendingTimers();
+        const component = await StatusListComponent.toJSON();
+        expect(component).toMatchSnapshot();
+        expect(setInterval).toHaveBeenCalled();
+        jest.clearAllTimers();
+    });
 
-        expect(createComponent(props)).toMatchSnapshot();
+    test('should stop interval to get new status when unmout status list', async () => {
+        const StatusListComponent = createComponent(propsStatusList);
+        jest.runOnlyPendingTimers();
+        StatusListComponent.unmount();
+        expect(clearInterval).toHaveBeenCalled();
+        jest.clearAllTimers();
     });
 });

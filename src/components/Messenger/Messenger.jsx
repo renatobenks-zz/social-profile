@@ -17,17 +17,18 @@ class Messenger extends Component {
         this.setState({
             friends: friends.map(friend => ({
                 ...friend,
-                online: !!friend.online
+                online: friend.online || false
             }))
         });
     }
 
     componentDidMount () {
-        this.interval = setInterval(this.onUpdateFriendStatus, 60000);
+        this.interval = setInterval(this.onUpdateFriendStatus, 30000);
     }
 
     componentWillReceiveProps () {
-        this.componentWillMount();
+        if (this.props.friends.length > this.state.friends.length)
+            this.componentWillMount();
     }
 
     componentWillUnmount () {
@@ -36,12 +37,12 @@ class Messenger extends Component {
 
     onUpdateFriendStatus () {
         const { friends } = this.state;
-        const friend = friends
-            [Math.floor(Math.random()*((friends.length-1)+1))];
-        friend.online = !friend.online;
 
         this.setState({
-            friends: [...friends]
+            friends: friends.map((friend, index) => ({
+                ...friend,
+                online: index === Math.floor(Math.random()*((friends.length-1)+1))
+            }))
         });
     }
 
