@@ -1,6 +1,6 @@
-# CodeRockr Application
+# A Social Profile
 
-> Software for coderockr challenge
+> Web application to simulate a social profile
 
 [![Build Status](https://travis-ci.org/renatobenks/CodeRockrApplication.svg?branch=master)](https://travis-ci.org/renatobenks/CodeRockrApplication)
 [![codecov](https://codecov.io/gh/renatobenks/CodeRockrApplication/branch/master/graph/badge.svg)](https://codecov.io/gh/renatobenks/CodeRockrApplication)
